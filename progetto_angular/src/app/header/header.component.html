@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light nav-shadow" >
+  <div class="container-fluid mx-3">
+      <a class="navbar-brand  h3 px-3 " >
+        <a class="lexy_logo nav-link fw-bold" routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact:true}" [routerLink]="'/'">PKB</a>
+      </a>
+       <button class="navbar-toggler" type="button" (click)="toggleNavbar()" aria-expanded="false" aria-controls="navbarText" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse mt-1  " [ngClass]="{'show': isNavbarOpen}" id="navbarText">
+      <ul class="navbar-nav w-75  text-center ">
+        <li class="nav-item p-0">
+          <a class="nav-link link-size p-1 me-2 m-0 " routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}" [routerLink]=" '/'"> Home
+            <hr class="hr-link mt-2  mx-auto m-0" *ngIf="isHomeActive">
+          </a>
+        </li>
+         <li  class="nav-item link-size  p-0">
+          <a class="nav-link p-1 me-2 m-0 " [routerLink]=" '/pattern'" routerLinkActive="active">Pattern
+            <hr class="hr-link mt-2 mx-auto m-0 " *ngIf="isPatternActive">
+          </a>
+        </li>
+          <li  class="nav-item link-size  p-0">
+          <a class="nav-link p-1 me-2 m-0 " [routerLink]=" '/articolo'" routerLinkActive="active">Articolo
+            <hr class="hr-link mt-2 mx-auto m-0 " *ngIf="isArticoloActive">
+          </a>
+        </li>
+        <li *ngIf=" !this.accessService.access.access" class="nav-item link-size  p-0">
+          <a class="nav-link p-1 me-2 m-0 " [routerLink]=" '/login'" routerLinkActive="active">Login
+            <hr class="hr-link mt-2 mx-auto m-0 " *ngIf="isLoginActive">
+          </a>
+        </li>
+        <li *ngIf="!isAmministratore() && !this.accessService.access.access" class="nav-item link-size p-0">
+          <a class="nav-link  p-1 me-2 m-0 " [routerLink]="'/registrati'" routerLinkActive="active">Registrati
+            <hr class="hr-link mt-2 mx-auto m-0" *ngIf="isRegistrationActive">
+          </a>
+        </li>
+        <li class="dropdown ps-0"   *ngIf="this.accessService.access.access">
+          <button class="btn btn-light dropdown-toggle p-1 color_menu " type="button"  (click)="toggleprofile()" data-bs-toggle="dropdown" aria-expanded="false">
+           <span class=" pe-1 color_menu" >{{this.accessService.access.username}}</span>
+          </button>
+          <ul class="dropdown-menu"   [ngClass]="{'show': this.isprofileOpen}">
+            <li>
+              <a class="dropdown-item" (click)="exit()" >Esci</a></li>
+          </ul>
+        </li>
+      </ul>
+       <form *ngIf="!isLoginActive && !isRegistrationActive" class="form-inline  d-flex ">
+          <div  class="dropdown">
+            <a class="btn bg-white dropdown-toggle text-secondary border border-1 rounded-end-0 border-end-0 "  role="button" id="dropdownMenuLink" (click)=" filtraNavbar()" aria-expanded="false">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+               <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+            </svg>
+              {{selectedItem}}
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [ngClass]="{'show': isfiltraOpen}">
+              <a class="dropdown-item"   (click)="selectItem('Pattern')">Pattern</a>
+              <a class="dropdown-item"  (click)="selectItem('Articolo GDPR')">Articolo GDPR</a>
+              <a class="dropdown-item"  (click)="selectItem('MVC')">MVC</a>
+            </div>
+      </div>
+            <input class="form-control mr-sm-4 me-1 rounded-start-0  " type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success mt-1  my-sm-0" type="submit">Search</button>
+          </form>
+    </div>
+
+  </div>
+</nav>
+

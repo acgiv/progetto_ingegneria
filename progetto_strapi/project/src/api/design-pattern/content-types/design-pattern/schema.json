@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "design_patterns",
+  "info": {
+    "singularName": "design-pattern",
+    "pluralName": "design-patterns",
+    "displayName": "design pattern",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ID_pattern": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "Titolo": {
+      "type": "text"
+    },
+    "Contesto": {
+      "type": "text"
+    },
+    "Esempio": {
+      "type": "text"
+    },
+    "mvcs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::mvc.mvc",
+      "inversedBy": "design_patterns"
+    },
+    "articolos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::articolo.articolo",
+      "inversedBy": "design_patterns"
+    },
+    "iso_92_4210s": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::iso-92-4210.iso-92-4210",
+      "mappedBy": "design_patterns"
+    },
+    "principi_pbds": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::principi.principi",
+      "mappedBy": "design_patterns"
+    },
+    "stato": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::stato.stato"
+    },
+    "strategias": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::strategia.strategia",
+      "mappedBy": "design_patterns"
+    },
+    "vulnerabilitas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::vulnerabilita.vulnerabilita",
+      "mappedBy": "design_patterns"
+    }
+  }
+}

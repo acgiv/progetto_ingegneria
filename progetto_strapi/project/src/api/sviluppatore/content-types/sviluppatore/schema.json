@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sviluppatores",
+  "info": {
+    "singularName": "sviluppatore",
+    "pluralName": "sviluppatores",
+    "displayName": "Sviluppatore",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "utente": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::utente.utente",
+      "inversedBy": "sviluppatore"
+    }
+  }
+}

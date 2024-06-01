@@ -1,0 +1,26 @@
+
+#sidebar {
+  overflow-y: auto;
+    max-height: calc(105vh); /* Adjust as needed */
+  /* Adjust as needed */
+}
+
+#sidebar::-webkit-scrollbar {
+  width: var(--scrollbar-width); /* Utilizza la variabile per impostare la larghezza */
+}
+
+
+#sidebar::-webkit-scrollbar-thumb {
+  background: #888; /* Colore della barra di scorrimento */
+  border-radius: 10px; /* Arrotondamento della barra di scorrimento */
+}
+
+#sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Colore della barra di scorrimento al passaggio del mouse */
+}
+
+main {
+  overflow-y: auto;
+  max-height: calc(100vh); /* Regola la dimensione del main come desiderato */
+}
+

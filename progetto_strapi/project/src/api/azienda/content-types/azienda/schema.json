@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "aziendas",
+  "info": {
+    "singularName": "azienda",
+    "pluralName": "aziendas",
+    "displayName": "Azienda",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string"
+    },
+    "partita_iva": {
+      "type": "integer"
+    },
+    "utente": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::utente.utente",
+      "mappedBy": "azienda"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "iso_92_4210s",
+  "info": {
+    "singularName": "iso-92-4210",
+    "pluralName": "iso-92-4210s",
+    "displayName": "ISO 92-4210",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "id_iso": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "Descrizione": {
+      "type": "text"
+    },
+    "design_patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::design-pattern.design-pattern",
+      "inversedBy": "iso_92_4210s"
+    }
+  }
+}

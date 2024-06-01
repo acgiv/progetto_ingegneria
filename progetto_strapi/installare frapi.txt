@@ -1,0 +1,15 @@
+install node.js v18.20.3
+install npm 10.7.0
+install strapi  4.6.0
+
+comand install strapi 
+npx create-strapi-app@4.6.0 project --quickstart
+
+error problem not found npm esbuild
+
+npm install esbuild@0.16.17
+
+
+link utili
+
+https://dev.to/justinkarso/strapi-v4-extend-core-controller-and-create-custom-routes-18kc

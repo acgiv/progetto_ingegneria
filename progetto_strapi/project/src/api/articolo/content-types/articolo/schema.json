@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articolos",
+  "info": {
+    "singularName": "articolo",
+    "pluralName": "articolos",
+    "displayName": "Articolo",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "id_articolo": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "descrizione": {
+      "type": "text"
+    },
+    "design_patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::design-pattern.design-pattern",
+      "mappedBy": "articolos"
+    },
+    "stato": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::stato.stato"
+    }
+  }
+}

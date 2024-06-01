@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "utentes",
+  "info": {
+    "singularName": "utente",
+    "pluralName": "utentes",
+    "displayName": "Utente",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "username": {
+      "type": "string",
+      "unique": true
+    },
+    "password": {
+      "type": "password"
+    },
+    "email": {
+      "type": "email",
+      "unique": true
+    },
+    "ruolo": {
+      "type": "enumeration",
+      "enum": [
+        "azienda, sviluppatore, amministratore"
+      ],
+      "default": "azienda, sviluppatore, amministratore"
+    },
+    "azienda": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::azienda.azienda",
+      "inversedBy": "utente"
+    },
+    "sviluppatore": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::sviluppatore.sviluppatore",
+      "mappedBy": "utente"
+    }
+  }
+}

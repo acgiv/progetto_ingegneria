@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "principis",
+  "info": {
+    "singularName": "principi",
+    "pluralName": "principis",
+    "displayName": "principi PBD",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "id_principio": {
+      "type": "integer",
+      "unique": true,
+      "required": true
+    },
+    "Descrizione": {
+      "type": "text"
+    },
+    "design_patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::design-pattern.design-pattern",
+      "inversedBy": "principi_pbds"
+    }
+  }
+}

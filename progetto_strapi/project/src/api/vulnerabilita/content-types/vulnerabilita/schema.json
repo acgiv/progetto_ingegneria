@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vulnerabilitas",
+  "info": {
+    "singularName": "vulnerabilita",
+    "pluralName": "vulnerabilitas",
+    "displayName": "Vulnerabilità",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "id_vulnerabilita": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "Descrizione": {
+      "type": "text"
+    },
+    "Categoria": {
+      "type": "string"
+    },
+    "design_patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::design-pattern.design-pattern",
+      "inversedBy": "vulnerabilitas"
+    }
+  }
+}
