@@ -11,14 +11,22 @@ module.exports = createCoreController('api::articolo.articolo',
    
    async findAll(ctx) {
      try {
-    let articoli = [];
+    let articoli =  [];
      const entries = await strapi.db.query('api::articolo.articolo').findMany({
       populate: ['stato'], // Popola la relazione 'stato'
     });
 
      if (entries && entries.length > 0) { // Assicurati che 'articolo' non sia null o undefined
       for(let i=0; i< entries.length; i++){
-        articoli.push ({ ["Articolo "+ entries[i].id_articolo]: [entries[i].id, entries[i].descrizione, entries[i].stato.nome]  });
+        console.Consol
+        articoli.push({
+                "id": entries[i].id,
+                "id_articolo": entries[i].id_articolo,
+                "descrizione": entries[i].descrizione,
+                "createdAt": entries[i].createdAt,
+                "updatedAt": entries[i].updatedAt,
+                "publishedAt": entries[i].publishedAt
+              });
       }
       
     } else {

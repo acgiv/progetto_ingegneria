@@ -24,7 +24,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::design-pattern.design-pattern",
-      "mappedBy": "mvcs"
+      "inversedBy": "mvcs"
     }
   }
 }

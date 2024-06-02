@@ -12,31 +12,19 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "ID_pattern": {
+    "id_pattern": {
       "type": "integer",
       "unique": true,
       "required": true
     },
-    "Titolo": {
+    "titolo": {
       "type": "text"
     },
-    "Contesto": {
+    "contesto": {
       "type": "text"
     },
-    "Esempio": {
+    "esempio": {
       "type": "text"
-    },
-    "mvcs": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::mvc.mvc",
-      "inversedBy": "design_patterns"
-    },
-    "articolos": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::articolo.articolo",
-      "inversedBy": "design_patterns"
     },
     "iso_92_4210s": {
       "type": "relation",
@@ -66,6 +54,21 @@
       "relation": "manyToMany",
       "target": "api::vulnerabilita.vulnerabilita",
       "mappedBy": "design_patterns"
+    },
+    "mvcs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::mvc.mvc",
+      "mappedBy": "design_patterns"
+    },
+    "articolos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::articolo.articolo",
+      "mappedBy": "design_patterns"
+    },
+    "descrizione": {
+      "type": "text"
     }
   }
 }

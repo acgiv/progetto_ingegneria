@@ -20,16 +20,16 @@
     "descrizione": {
       "type": "text"
     },
-    "design_patterns": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::design-pattern.design-pattern",
-      "mappedBy": "articolos"
-    },
     "stato": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::stato.stato"
+    },
+    "design_patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::design-pattern.design-pattern",
+      "inversedBy": "articolos"
     }
   }
 }
