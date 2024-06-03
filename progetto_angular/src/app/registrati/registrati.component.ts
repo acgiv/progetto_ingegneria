@@ -1,4 +1,4 @@
-import {Component, Injectable, signal, ViewChild} from '@angular/core';
+import {Component, Injectable, ViewChild} from '@angular/core';
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {FormsModule, NgForm, ReactiveFormsModule} from "@angular/forms";
 import {NgClass, NgIf, } from "@angular/common";

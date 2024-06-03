@@ -25,7 +25,7 @@ module.exports = createCoreController('api::design-pattern.design-pattern',
             titolo: entries[i].titolo,
             contesto: entries[i].contesto,
             esempio: entries[i].esempio,
-            stato: [entries[i].stato.id_stato, entries[i].stato.nome],
+            stato: {id: entries[i].id, id_stato: entries[i].stato.id_stato, nome: entries[i].stato.nome},
             iso_92_4210: entries[i].iso_92_4210s,
             strategia: entries[i].strategias,
             vulerabilita:  entries[i].vulnerabilitas,
@@ -52,6 +52,12 @@ module.exports = createCoreController('api::design-pattern.design-pattern',
       // Restituisci il risultato
       return result;
 
+  },
+
+  async ricerca(ctx) {
+    const { nome, filtro } = ctx.request.body;
+    const result = await strapi.service('api::design-pattern.design-pattern').ricerca(nome, filtro);
+      return result;
   },
 
  }),

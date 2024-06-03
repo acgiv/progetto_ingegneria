@@ -18,16 +18,7 @@ module.exports = createCoreController('api::articolo.articolo',
 
      if (entries && entries.length > 0) { // Assicurati che 'articolo' non sia null o undefined
       for(let i=0; i< entries.length; i++){
-        console.Consol
-        articoli.push({
-                "id": entries[i].id,
-                "id_articolo": entries[i].id_articolo,
-                "descrizione": entries[i].descrizione,
-                "createdAt": entries[i].createdAt,
-                "updatedAt": entries[i].updatedAt,
-                "publishedAt": entries[i].publishedAt
-              });
-      }
+        articoli.push(entries[i]);}
       
     } else {
         return 'Articolo non trovato';

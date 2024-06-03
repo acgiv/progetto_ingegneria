@@ -73,3 +73,13 @@ S
 #src/app/service/interface/search.ts,a\d\adf829eaddce932402402cad3ddc49422ea1a4f1
 Q
 !src/app/service/access.service.ts,8\e\8ed81a91c97275e9ece6a64dab623e4c2aa2b8ea
+W
+'src/app/header/header.component.spec.ts,3\c\3c17e9b1b221fb9f59060ac402ec5d2be0f71dd4
+o
+?src/app/view-prodoct/view_directive/view-directive.directive.ts,4\f\4f3af405de630b6a9a7931a731798df7995dd628
+R
+"src/app/view-prodoct/nl2br.pipe.ts,a\e\ae8e7525014aff8a8eecd6875139f92264174b58
+W
+'src/app/view-prodoct/nl2br.pipe.spec.ts,9\8\98bc87bc136d36367f58c9f360d629bbcc075f9d
+a
+1node_modules/bootstrap/dist/css/bootstrap.min.css,7\c\7ced018b33ee30008dcab1024ab4ba17bffd71a9

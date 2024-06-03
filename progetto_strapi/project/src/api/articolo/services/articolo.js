@@ -38,7 +38,7 @@ module.exports = customRouter(module.exports, myExtraRoutes);
 module.exports = createCoreService('api::articolo.articolo', ({ strapi }) => ({
     async findArticoloByTitle(id){
         let rspost ;
-        console.log(id);
+    
         const articolo = await strapi.db.query('api::articolo.articolo').findOne({
           populate: ['stato'],
             where: { 
@@ -46,10 +46,8 @@ module.exports = createCoreService('api::articolo.articolo', ({ strapi }) => ({
             }
             });   
             if (articolo) { // Assicurati che 'articolo' non sia null o undefined
-              console.log(articolo);
-              rspost = { ["Articolo " + articolo.id_articolo]: [articolo.id_articolo,  articolo.descrizione, articolo.stato.nome] };
+              return  articolo;
             } else {
-                console.log('Articolo non trovato');
             }
           return rspost;
 

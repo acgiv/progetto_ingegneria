@@ -1,14 +1,13 @@
 
 #sidebar {
   overflow-y: auto;
-    max-height: calc(105vh); /* Adjust as needed */
+    max-height: calc(90vh); /* Adjust as needed */
   /* Adjust as needed */
 }
 
 #sidebar::-webkit-scrollbar {
   width: var(--scrollbar-width); /* Utilizza la variabile per impostare la larghezza */
 }
-
 
 #sidebar::-webkit-scrollbar-thumb {
   background: #888; /* Colore della barra di scorrimento */
@@ -19,8 +18,21 @@
   background: #555; /* Colore della barra di scorrimento al passaggio del mouse */
 }
 
-main {
+#main {
   overflow-y: auto;
-  max-height: calc(100vh); /* Regola la dimensione del main come desiderato */
+  max-height: calc(88vh); /* Regola la dimensione del main come desiderato */
+  max-width: 98.5% !important;
 }
 
+#main::-webkit-scrollbar {
+  width: 8px; /* Utilizza la variabile per impostare la larghezza */
+}
+
+#main::-webkit-scrollbar-thumb {
+  background: #888; /* Colore della barra di scorrimento */
+  border-radius: 10px; /* Arrotondamento della barra di scorrimento */
+}
+
+#main::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Colore della barra di scorrimento al passaggio del mouse */
+}

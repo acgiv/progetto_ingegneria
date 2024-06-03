@@ -1,21 +1,50 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
 
-import { CashService } from './cash.service';
-import {FindAllArticle} from "./interface/search"; // Importa il servizio di cache
+import {FindAllArticle, FindAllPattern, SearchMessage} from "./interface/search";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RicercaService {
 
-  private apiUrl = 'http://localhost:1337/api/articolo';
+  private apiUrl = 'http://localhost:1337/api';
+  private list_pattern = [
+    "Pattern",
+    "Articolo GDPR",
+     "Mvc",
+    "Principi",
+    "Vulnerabilità",
+    "ISO 92-4210",
+    "Strategia"
+  ]
 
-  constructor(private http: HttpClient, private cashService: CashService) { }
+  private messageSubject = new Subject<SearchMessage>();
+  message$ = this.messageSubject.asObservable();
+
+  constructor(private http: HttpClient) { }
 
   findManyArticle(): Observable<any> {
-    return this.http.get<FindAllArticle>('http://localhost:1337/api/articolo/findAll');
+    return this.http.get<FindAllArticle>(this.apiUrl+'/articolo/findAll');
   }
+
+   findManyPattern(): Observable<any> {
+    return this.http.get<FindAllPattern>(this.apiUrl+'/pattern/findAll');
+  }
+
+  search(body: any): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post<any>(this.apiUrl+'/pattern/ricerca', body, {headers});
+  }
+
+  getListPattern(){
+    return this.list_pattern;
+  }
+
+  setMessageSearch( message: SearchMessage){
+     this.messageSubject.next(message);
+  }
+
+
 }

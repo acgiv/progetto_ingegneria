@@ -3,7 +3,9 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import {provideHttpClient} from "@angular/common/http";
+import {ViewDirective} from "./view-prodoct/view_directive/view-directive.directive";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient()]
+
+  providers: [provideRouter(routes), provideHttpClient(),  ViewDirective ]
 };

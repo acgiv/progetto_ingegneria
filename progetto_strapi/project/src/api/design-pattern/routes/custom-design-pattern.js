@@ -12,5 +12,10 @@ module.exports = {
         path: "/pattern/findAll",
         handler: "design-pattern.findAll",
       },
+      {
+        method: "POST",
+        path: "/pattern/ricerca",
+        handler: "design-pattern.ricerca",
+      },
     ],
   };

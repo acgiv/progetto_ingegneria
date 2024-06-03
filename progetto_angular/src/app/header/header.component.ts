@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {FormControl, Validators} from "@angular/forms";
-import {urlValidator} from "../Validator/validator";
-import {NgClass, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {AccessService} from "../service/access.service";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faPeopleArrows, faUser, faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import {RicercaService} from "../service/ricerca.service";
+import {FormsModule, NgForm} from "@angular/forms";
+import {SearchMessage} from "../service/interface/search";
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,9 @@ import {faPeopleArrows, faUser, faUserCircle} from "@fortawesome/free-solid-svg-
     NgClass,
     RouterLink,
     NgIf,
-    FaIconComponent
+    FaIconComponent,
+    NgForOf,
+    FormsModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -39,7 +41,7 @@ export class HeaderComponent implements OnInit  {
     });
   }
 
-    constructor(private router: Router, protected accessService: AccessService ) {
+    constructor(private router: Router, protected accessService: AccessService, protected ricercaService: RicercaService) {
     this.isprofileOpen = false;
   }
 
@@ -70,7 +72,7 @@ export class HeaderComponent implements OnInit  {
 
       selectItem(item: string) {
           this.selectedItem = item;
-          this.isfiltraOpen = false; // Close the dropdown after selection
+          this.isfiltraOpen = false;
         }
 
       toggleprofile(){
@@ -81,7 +83,12 @@ export class HeaderComponent implements OnInit  {
           this.accessService.resetAccess()
         }
 
-  protected readonly faPeopleArrows = faPeopleArrows;
-  protected readonly faUser = faUser;
-  protected readonly faUserCircle = faUserCircle;
+        sendSearch(s: NgForm){
+          let message :SearchMessage = {
+            nome : s.value.search,
+            filtro : this.selectedItem
+          };
+          this.ricercaService.setMessageSearch(message);
+        }
+
 }

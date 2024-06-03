@@ -9,6 +9,7 @@ interface Access {
 
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +20,7 @@ export class AccessService {
     email: "",
     ruolo: "",
   }
+
   constructor() { }
 
    // Funzione per impostare lo stato di accesso
@@ -40,13 +42,12 @@ export class AccessService {
     this.access.ruolo =  ruolo;
   }
 
-
   resetAccess() {
     this.access = {
       access: false,
       username: "",
       email: "",
-      ruolo: "",
+      ruolo: ""
     };
   }
 
