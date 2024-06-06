@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit  {
   isNavbarOpen:boolean = false;
   isfiltraOpen:boolean = false;
   isprofileOpen:boolean = false;
+  isPropostaActive:boolean = false;
   selectedItem = "Pattern";
 
     ngOnInit(): void {
@@ -51,6 +52,8 @@ export class HeaderComponent implements OnInit  {
         this.isRegistrationActive = this.isActive('/registrati');
         this.isArticoloActive = this.isActive('/articolo');
         this.isPatternActive = this.isActive('/pattern');
+        this.isPropostaActive =this.isActive('/proposta');
+
       }
 
     isActive(route: string): boolean {

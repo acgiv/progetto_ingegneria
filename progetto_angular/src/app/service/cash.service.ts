@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Articolo, FindAllPattern, Pattern} from "./interface/search";
+import {Articolo, FindAllPattern, Mvc, Pattern} from "./interface/search";
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +7,10 @@ import {Articolo, FindAllPattern, Pattern} from "./interface/search";
 export class CashService {
    private cacheArticolo: Map<string, any> = new Map();
    private cachePattern:  Map<string, any> = new Map();
+   public  cacheMvc: string[] = [];
+   public  cachePrincipi: string[] = [];
+   public  cacheStrategia: string[] = [];
+   public  cacheIso: string[] = [];
   constructor() { }
 
     setCachedResults(query: string, results: any, type:string): void {
@@ -34,10 +38,12 @@ export class CashService {
 
   getCachedResultsPatterns(query: string): Pattern {
       return this.cachePattern.get(query);
+
   }
 
    getCachedResultsArticle(query: string): Articolo {
       return this.cacheArticolo.get(query);
   }
+
 
 }

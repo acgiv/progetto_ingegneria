@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 
-import {FindAllArticle, FindAllPattern, SearchMessage} from "./interface/search";
+import {
+  FindAllArticle, FindAllIso,
+  FindAllMvc,
+  FindAllPattern,
+  FindAllPrincipi,
+  FindAllStrategia,
+  Mvc,
+  SearchMessage
+} from "./interface/search";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +39,22 @@ export class RicercaService {
 
    findManyPattern(): Observable<any> {
     return this.http.get<FindAllPattern>(this.apiUrl+'/pattern/findAll');
+  }
+
+   findManyMvc(): Observable<any> {
+    return this.http.get<any>('http://localhost:1337/api/mvcs');
+  }
+
+  findManyPrincipi(): Observable<any> {
+    return this.http.get<FindAllPrincipi>('http://localhost:1337/api/principis');
+  }
+
+   findManyStrategia(): Observable<any> {
+    return this.http.get<FindAllStrategia>('http://localhost:1337/api/strategias');
+  }
+
+   findManyIso(): Observable<any> {
+    return this.http.get<FindAllIso>('http://localhost:1337/api/iso-92-4210s');
   }
 
   search(body: any): Observable<any> {

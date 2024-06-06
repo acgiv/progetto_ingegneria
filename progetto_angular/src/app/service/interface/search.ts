@@ -103,6 +103,88 @@ export interface Mvc {
   publishedAt: string;
 }
 
+export interface FindAllMvc {
+  data: Mvcs[];
+  meta: Meta;
+}
+
+
+export interface Mvcs {
+  id: number;
+  attributes: MvcAttributes;
+}
+
+export interface MvcAttributes {
+  id_mvc: number;
+  Descrizione: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface Meta {
+  pagination: {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+  }
+}
+
+
+export interface FindAllPrincipi {
+  data: Principis[];
+}
+
+export interface Principis {
+  id: number;
+  attributes: PrincipiAttributes;
+}
+
+
+export interface PrincipiAttributes {
+  id_principio: number;
+  Descrizione: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface FindAllStrategia {
+  data: Strategias[];
+  meta: Meta;
+}
+
+export interface Strategias {
+  id: number;
+  attributes: StrategiasAttributes;
+}
+
+export interface StrategiasAttributes {
+  id_strategia: number;
+  Descrizione: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface FindAllIso {
+  data: Isos[];
+}
+
+export interface Isos {
+  id: number;
+  attributes: StrategiasIsos;
+}
+
+export interface StrategiasIsos {
+  id_iso: number;
+  Descrizione: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
 export interface FindAllArticle extends Array<Articolo> {}
 
 export interface Articolo {
@@ -128,3 +210,4 @@ export interface SearchMessage{
   nome: string;
   filtro: string;
 }
+

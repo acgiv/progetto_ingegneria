@@ -21,6 +21,15 @@ module.exports = {
         method: "POST",
         path: "/utente/login",
         handler: "utente.login",
-      },
+      },{
+
+        method: 'POST',
+        path: '/send-email',
+        handler: 'utente.sendEmail',
+        config: {
+          policies: [],
+          middlewares: [],
+      }
+        },
     ],
   };

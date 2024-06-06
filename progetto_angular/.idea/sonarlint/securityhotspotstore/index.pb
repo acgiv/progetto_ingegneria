@@ -83,3 +83,15 @@ W
 'src/app/view-prodoct/nl2br.pipe.spec.ts,9\8\98bc87bc136d36367f58c9f360d629bbcc075f9d
 a
 1node_modules/bootstrap/dist/css/bootstrap.min.css,7\c\7ced018b33ee30008dcab1024ab4ba17bffd71a9
+a
+1src/app/proposta/proposta/proposta.component.html,6\f\6fcece8e16244abbf5b74767de95db071d54add1
+_
+/src/app/proposta/proposta/proposta.component.ts,e\2\e2ac8c0b39b484586b69360ab319cea3b8024660
+`
+0src/app/proposta/proposta/proposta.component.css,d\3\d3f3314f3dcafdf47ce53c3927b89f45683587d1
+W
+'node_modules/@angular/common/index.d.ts,c\2\c2b58f62d66e5dea5ba4fe117745ec09a7f22956
+V
+&src/app/proposta/proposta.directive.ts,7\d\7df3149490750d47866bf50abcc6a9ab763ef70d
+X
+(node_modules/typescript/lib/lib.es5.d.ts,3\d\3d99373f7b5eef4201ca57a888c1ec02e798f630

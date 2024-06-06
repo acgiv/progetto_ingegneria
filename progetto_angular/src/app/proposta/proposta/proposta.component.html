@@ -1,0 +1,116 @@
+<div class="container-fluid vh-100 d-flex  justify-content-center">
+  <div class="row justify-content-center w-100">
+    <div class="col-md-11">
+      <form (ngSubmit)="onProposta(f)" #f="ngForm">
+        <div class="mb-4">
+          <label class="pt-4 pb-2" for="rule"><span class="fw-semibold">{{ this.label }} </span></label>
+          <div class="dropdown">
+            <button id="rule" (click)=" filtraArticolo()" class="btn bg-white  border border-1 w-100 text-start "
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ this.proposta_input }} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+            </button>
+            <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickable}">
+              <li *ngFor="let item of this.cash.getCachedResult(this.label_search) | keyvalue"><a
+                class="dropdown-item" (click)="selectItem(item.key)">{{ item.key }}</a></li>
+            </ul>
+          </div>
+          <label for="descrizione" class="form-label mt-3">
+            <span class="fw-semibold">Descrizione</span>
+          </label>
+          <div class="input-group">
+                <textarea type="text" id="descrizione" class="form-control" name="descrizione" placeholder="Descrizione"
+                          ngModel
+                          required autocomplete="off" [(ngModel)]="this.descrizione"></textarea>
+          </div>
+          <div *ngIf="this.accessService.access.ruolo === 'Sviluppatore'">
+            <label for="Context" class="form-label mt-3">
+              <span class="fw-semibold">Context</span>
+            </label>
+            <div class="input-group">
+                  <textarea type="text" id="context" class="form-control" name="context" placeholder="context" ngModel
+                            required autocomplete="off" [(ngModel)]="this.contesto"></textarea>
+            </div>
+            <label for="Exemple" class="form-label mt-3">
+              <span class="fw-semibold">Exemple</span>
+            </label>
+            <div class="input-group">
+                  <textarea type="text" id="Exemple" class="form-control" name="exemple" placeholder="exemple" ngModel
+                            required autocomplete="off" [(ngModel)]="this.esempi"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="pt-4 pb-2" for="mvc"><span class="fw-semibold">Mvc </span></label>
+              <div class="dropdown">
+                <button id="Mvc" (click)=" selectMvc()" class="btn bg-white  border border-1 w-100 text-start "
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ this.mvc.join(", ") }} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+                </button>
+                <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickableMvc}">
+                  <li *ngFor="let mv of this.cash.cacheMvc">
+                    <a class="dropdown-item" (click)="selectItemMvc(mv)">{{ mv }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="pt-4 pb-2" for="article"><span class="fw-semibold">Article GDPR Compliance with the Pattern</span></label>
+              <div class="dropdown">
+                <button id="article" (click)="selectArticoli()" class="btn bg-white  border border-1 w-100 text-start "
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ this.articoli.join(", ") }} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+                </button>
+                <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickableArticle}">
+                  <li *ngFor="let ar of this.propostaDirective.fILDaLLarticoli">
+                    <a class="dropdown-item" (click)="selectItemArticoli(ar)">{{ ar }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="pt-4 pb-2" for="principi"><span class="fw-semibold">Privacy By Design Principles</span></label>
+              <div class="dropdown">
+                <button id="principi" (click)="selectPrincipi()" class="btn bg-white  border border-1 w-100 text-start "
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ this.principi.join(", ") }} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+                </button>
+                <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickablePrincipi}">
+                  <li *ngFor="let pi of this.cash.cachePrincipi">
+                    <a class="dropdown-item" (click)="selectItemPrincipi(pi)">{{ pi }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="pt-4 pb-2" for="strategia"><span class="fw-semibold">Strategies</span></label>
+              <div class="dropdown">
+                <button id="strategia" (click)="selectStrategia()" class="btn bg-white  border border-1 w-100 text-start "
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ this.strategia.join(", ") }} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+                </button>
+                <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickableStrategia}">
+                  <li *ngFor="let sa of this.cash.cacheStrategia">
+                    <a class="dropdown-item" (click)="selectItemStrategia(sa)">{{ sa }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="pt-4 pb-2" for="Iso"><span class="fw-semibold">ISO 9241-210 Phase</span></label>
+              <div class="dropdown">
+                <button id="Iso" (click)="selectIso()" class="btn bg-white  border border-1 w-100 text-start "
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ this.iso.join(", ") }} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+                </button>
+                <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickableIso}">
+                  <li *ngFor="let is of this.cash.cacheIso">
+                    <a class="dropdown-item" (click)="selectItemIso(is)">{{ is }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

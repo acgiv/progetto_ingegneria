@@ -39,7 +39,6 @@ export class ViewDirective {
       .pipe(
         tap((data: FindAllArticle) => {
           let i =0;
-
           for(const element of data) {
            if(element) {
              if(element.stato.nome ==="Validated"){
@@ -75,7 +74,7 @@ export class ViewDirective {
                 this.cash.setCachedResults(element.titolo, element, this.root);
                 if (i === 0) {
                   this.titolo = element.titolo;
-                  this.descrizione = element.contesto;
+                  this.descrizione = element.descrizione;
                   this.contesto = element.contesto;
                   this.iso = element.iso_92_4210;
                   this.esempi = element.esempio.replace("\n", "<br> <br>");

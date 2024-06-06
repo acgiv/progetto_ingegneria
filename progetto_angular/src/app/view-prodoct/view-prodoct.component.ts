@@ -30,9 +30,10 @@ export class ViewProdoctComponent implements OnInit {
   titoloMenu: string;
 
 
-  constructor(protected router: Router, protected cash: CashService, protected viewDirective: ViewDirective, protected ricercaService: RicercaService) {
+  constructor(protected router: Router, protected viewDirective: ViewDirective, protected ricercaService: RicercaService,  protected  cash: CashService) {
     this.openMenu = true;
     this.titoloMenu = this.viewDirective.set_menu_titile();
+
   }
 
   ngOnInit(): void {

@@ -29,6 +29,29 @@ module.exports = createCoreController('api::utente.utente',
       const entries = await strapi.service("api::utente.utente").login(ctx, username, password);
       return entries;
     },
+    
+    async sendEmail(ctx) {
+      const { email } = ctx.request.body;
+  
+      if (!email) {
+        return ctx.badRequest('Email is missing');
+      }
+  
+      try {
+  
+        await strapi.plugins['email'].services.email.send({
+          to: email,
+          subject: 'Test Email',
+          text: 'This is a test email sent from Strapi',
+          html: '<p>This is a test email sent from Strapi</p>',
+        });
+  
+        return ctx.send({ message: 'Email sent successfully' });
+      } catch (err) {
+        console.error('Failed to send email:', err);
+        return ctx.badRequest('Failed to send email', err);
+      }
+    },
 
   }),
   

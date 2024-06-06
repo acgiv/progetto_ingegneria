@@ -51,6 +51,7 @@ export class RegistratiComponent {
     private router: Router,
     private accessService:  AccessService
 
+
   ) {
     this.control_error = {
       'formControl': false,
