@@ -95,6 +95,7 @@ export class ViewProdoctComponent implements OnInit {
        }
        this.viewDirective.strategia = patt.strategia;
        this.viewDirective.vulnerabilita = patt.vulerabilita;
+       this.viewDirective.categoria = patt.categoria_owasps;
        this.viewDirective.principi = patt.principi_pbd;
        this.viewDirective.mvc = patt.mvc;
        this.viewDirective.articoli = patt.articoli;

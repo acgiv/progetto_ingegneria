@@ -52,4 +52,27 @@ module.exports = createCoreService('api::articolo.articolo', ({ strapi }) => ({
           return rspost;
 
     },
+    async findIdPattern(id){
+      try {
+        // Esegui la query per trovare l'articolo con l'id specificato
+        const articolo = await strapi.query('api::articolo.articolo').findOne({
+          populate: ["design_patterns"],
+          where: { 
+            id_articolo: id 
+          }
+        });
+    
+        if (!articolo) {
+          return [];
+        }
+    
+        const designPatternIds = articolo.design_patterns.map(designPattern => designPattern.id);
+    
+        return designPatternIds;
+      } catch (error) {
+        console.error('Si è verificato un errore durante la ricerca degli ID dei design pattern:', error);
+        return []; 
+      }
+         
+        }
 }));

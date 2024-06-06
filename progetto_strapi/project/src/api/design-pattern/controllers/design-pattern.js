@@ -14,7 +14,7 @@ module.exports = createCoreController('api::design-pattern.design-pattern',
      try {
     let pattern = [];
      const entries = await strapi.db.query('api::design-pattern.design-pattern').findMany({
-      populate: ["mvcs","stato", "articolos","iso_92_4210s","strategias", "vulnerabilitas", "principi_pbds"], 
+      populate: ["mvcs","stato", "articolos","iso_92_4210s","strategias", "vulnerabilitas", "principi_pbds", "categoria_owasps"], 
     });
   
     if (entries && entries.length > 0) {
@@ -32,7 +32,7 @@ module.exports = createCoreController('api::design-pattern.design-pattern',
             principi_pbd:  entries[i].principi_pbds,
             mvc: entries[i].mvcs,
             articoli: entries[i].articolos,
-
+            categoria_owasps:  entries[i].categoria_owasps,
           });
         }
         

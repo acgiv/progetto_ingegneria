@@ -95,3 +95,7 @@ V
 &src/app/proposta/proposta.directive.ts,7\d\7df3149490750d47866bf50abcc6a9ab763ef70d
 X
 (node_modules/typescript/lib/lib.es5.d.ts,3\d\3d99373f7b5eef4201ca57a888c1ec02e798f630
+L
+src/app/proposta/proposta.ts,2\4\240db80b168848b41885d614ec2a1adad964a412
+T
+$src/app/proposta/proposta.service.ts,b\0\b0e77388cb4f3b5ca669ab3c3bff122528c568b7

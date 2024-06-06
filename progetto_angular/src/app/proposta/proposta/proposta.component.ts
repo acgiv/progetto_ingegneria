@@ -5,14 +5,17 @@ import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {AccessService} from "../../service/access.service";
 import {RicercaService} from "../../service/ricerca.service";
 import {CashService} from "../../service/cash.service";
-import {catchError, EMPTY, finalize, tap} from "rxjs";
+import {catchError, EMPTY, finalize, of, tap} from "rxjs";
 import {
+  FindAllArticle,
   FindAllPattern,
-  Iso,
   Pattern,
-  Vulnerabilita
 } from "../../service/interface/search";
 import {PropostaDirective} from "../proposta.directive";
+import {PropostaService} from "../proposta.service";
+import {CreateArticleBody} from "../proposta";
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-proposta',
@@ -36,22 +39,35 @@ export class PropostaComponent {
   clickablePrincipi: boolean = false;
   clickableStrategia: boolean = false;
   clickableIso: boolean = false;
+  clickableVulnerabilita: boolean = false;
+  clickableCategoria: boolean = false;
   proposta_input: string = "";
   descrizione: unknown;
   contesto: string = "";
   esempi: any;
+  fILDaLLarticoli: string[] = [];
   mvc: string[] = [];
   articoli: string[] = [];
   principi: string[] = [];
-  strategia:string[] = [];
+  strategia: string[] = [];
   iso: string[] = [];
-  vulnerabilita: Vulnerabilita[] | undefined;
-
+  vulnerabilita: string[] = [];
+  categoria: string[] = [];
   label_search: string;
   label: string = "";
+  error: boolean = false;
 
-  constructor(protected accessService: AccessService, protected cash: CashService, private ricercaService: RicercaService, protected propostaDirective: PropostaDirective) {
+
+  constructor(
+    protected accessService: AccessService,
+    protected cash: CashService,
+    private ricercaService: RicercaService,
+    protected propostaDirective: PropostaDirective,
+    private propostaService: PropostaService,
+    private router: Router
+  ) {
     accessService.setRuolo('Sviluppatore');
+    this.loadArticoli();
     if (this.accessService.access.ruolo === "Azienda") {
       this.label_search = "articolo";
       this.label = "Articoli";
@@ -62,9 +78,6 @@ export class PropostaComponent {
     }
   }
 
-  onProposta(f: NgForm) {
-    console.log(f);
-  }
 
   filtraArticolo() {
     this.clickable = !this.clickable;
@@ -78,18 +91,25 @@ export class PropostaComponent {
     this.clickableArticle = !this.clickableArticle;
   }
 
-   selectPrincipi() {
-      this.clickablePrincipi = !this.clickablePrincipi;
-    }
+  selectPrincipi() {
+    this.clickablePrincipi = !this.clickablePrincipi;
+  }
 
-    selectStrategia() {
-      this.clickableStrategia = !this.clickableStrategia ;
-    }
+  selectStrategia() {
+    this.clickableStrategia = !this.clickableStrategia;
+  }
 
-     selectIso() {
-     this.clickableIso = !this.clickableIso ;
-      }
+  selectIso() {
+    this.clickableIso = !this.clickableIso;
+  }
 
+  selectVulnerabilita() {
+    this.clickableVulnerabilita = !this.clickableVulnerabilita;
+  }
+
+  selectCategoria() {
+    this.clickableCategoria = !this.clickableCategoria;
+  }
 
   loadPattern(): void {
     this.ricercaService.findManyPattern()
@@ -102,15 +122,7 @@ export class PropostaComponent {
                 this.cash.setCachedResults(element.titolo, element, this.label_search);
                 if (i === 0) {
                   this.proposta_input = element.titolo;
-                  this.descrizione = element.descrizione;
-                  this.contesto = element.contesto;
-                  this.esempi = element.esempio.replace("\n", "\n\n");
-                  this.vulnerabilita = element.vulerabilita;
-                  this.set_element_strategia(element);
-                  this.set_element_mvc(element);
-                  this.set_element_art(element);
-                  this.set_element_principi(element);
-                  this.set_element_iso(element);
+                  this.setPopolatePattern(element);
                   i += 1;
                 }
               }
@@ -128,33 +140,74 @@ export class PropostaComponent {
       .subscribe();
   }
 
+
+  loadArticoli(): void {
+    this.ricercaService.findManyArticle()
+      .pipe(
+        tap((data: FindAllArticle) => {
+          let i = 0;
+          for (const element of data) {
+            if (element.stato.nome === "Validated") {
+              this.fILDaLLarticoli.push("Article " + element.id_articolo);
+              if (this.label_search === "articolo") {
+                this.cash.setCachedResults("Article " + element.id_articolo, element, this.label_search);
+                if (i === 0) {
+                  this.proposta_input = "Article " + element.id_articolo;
+                  this.descrizione = element.descrizione;
+                  if (element.descrizione != null) {
+                    this.propostaDirective.text_compare.descrizione = element.descrizione;
+                  }
+                  i += 1;
+
+                }
+              }
+            }
+          }
+        }),
+        catchError(error => {
+          console.error('Errore durante il recupero degli articoli:', error);
+          return EMPTY; // Ritorna un observable vuoto per continuare il flusso
+        }), finalize(() => {
+
+        })
+      )
+      .subscribe();
+  }
+
   selectItem(item: any) {
     this.proposta_input = item;
     this.clickable = false;
     if (this.accessService.access.ruolo === "Azienda") {
       this.descrizione = this.cash.getCachedResultsArticle(item).descrizione;
+      this.propostaDirective.text_compare.descrizione = this.cash.getCachedResultsArticle(item).descrizione
     } else {
       this.setPopolatePattern(this.cash.getCachedResultsPatterns(item));
     }
   }
 
-
   setPopolatePattern(patt: Pattern) {
     this.descrizione = patt.descrizione;
     this.contesto = patt.contesto;
     this.esempi = patt.esempio.replace("\n", "\n\n");
-    this.vulnerabilita = patt.vulerabilita;
     this.set_element_mvc(patt);
     this.set_element_art(patt);
     this.set_element_principi(patt);
     this.set_element_strategia(patt);
-    this.set_element_iso(patt) ;
+    this.set_element_iso(patt);
+    this.set_element_vulnerabilita(patt);
+    this.set_element_categoria(patt);
+    this.propostaDirective.text_compare.esempio = patt.esempio;
+    this.propostaDirective.text_compare.contesto = patt.contesto;
+    if (patt.descrizione != null) {
+      this.propostaDirective.text_compare.descrizione = patt.descrizione;
+    }
   }
 
   set_element_mvc(element: any) {
     this.mvc = [];
     for (const el of element.mvc) {
       this.mvc.push(el.Descrizione);
+      this.propostaDirective.text_compare.mvc = this.mvc.join(", ");
     }
   }
 
@@ -163,6 +216,7 @@ export class PropostaComponent {
     for (const el of element.articoli) {
       this.articoli.push("Article " + el.id_articolo);
     }
+    this.propostaDirective.text_compare.articolo = this.articoli.join(",");
   }
 
   set_element_principi(element: any) {
@@ -170,6 +224,7 @@ export class PropostaComponent {
     for (const el of element.principi_pbd) {
       this.principi.push(el.Descrizione);
     }
+    this.propostaDirective.text_compare.principi = this.principi.join(", ");
   }
 
   set_element_strategia(element: any) {
@@ -177,15 +232,32 @@ export class PropostaComponent {
     for (const el of element.strategia) {
       this.strategia.push(el.Descrizione);
     }
+    this.propostaDirective.text_compare.strategia = this.strategia.join(", ");
   }
 
-   set_element_iso(element: any) {
-    this.iso= [];
+  set_element_iso(element: any) {
+    this.iso = [];
     for (const el of element.iso_92_4210) {
       this.iso.push(el.Descrizione);
     }
+    this.propostaDirective.text_compare.iso = this.iso.join(", ");
   }
 
+  set_element_vulnerabilita(element: any) {
+    this.vulnerabilita = [];
+    for (const el of element.vulerabilita) {
+      this.vulnerabilita.push(el.Descrizione);
+    }
+    this.propostaDirective.text_compare.vulnerabilita = this.vulnerabilita.join(", ");
+  }
+
+  set_element_categoria(element: any) {
+    this.categoria = [];
+    for (const el of element.categoria_owasps) {
+      this.categoria.push(el.Descrizione);
+    }
+    this.propostaDirective.text_compare.categoria = this.categoria.join(", ");
+  }
 
 
   selectItemMvc(item: any) {
@@ -198,38 +270,105 @@ export class PropostaComponent {
     this.clickableArticle = false;
   }
 
-   selectItemPrincipi(item: string) {
+  selectItemPrincipi(item: string) {
     this.selectItemMenu(item, this.principi);
     this.clickablePrincipi = false;
   }
 
-   selectItemStrategia(item: string) {
-      this.selectItemMenu(item, this.strategia);
-     this.clickableStrategia = false;
+  selectItemStrategia(item: string) {
+    this.selectItemMenu(item, this.strategia);
+    this.clickableStrategia = false;
   }
 
-   selectItemIso(item: string) {
+  selectItemIso(item: string) {
     this.selectItemMenu(item, this.iso);
     this.clickableIso = false;
   }
 
-   selectItemMenu(item: any, lista: any):void {
-     const itemIndex = lista.indexOf(item);
-     if (itemIndex !== -1) {
-       lista.splice(itemIndex, 1);
-     } else {
-       const dashIndex = lista.indexOf("-");
-       if (dashIndex !== -1) {
-         lista.splice(dashIndex, 1);
-       }
-       lista.push(item);
-     }
+  selectItemVulnerabilita(item: string) {
+    this.selectItemMenu(item, this.vulnerabilita);
+    this.clickableVulnerabilita = false;
+  }
 
-     if (lista.length === 0) {
-       lista.push("-");
-     }
-   }
+  selectItemCategoria(item: string) {
+    this.selectItemMenu(item, this.categoria);
+    this.clickableCategoria = false;
+  }
+
+  selectItemMenu(item: any, lista: any): void {
+    const itemIndex = lista.indexOf(item);
+    if (itemIndex !== -1) {
+      lista.splice(itemIndex, 1);
+    } else {
+      const dashIndex = lista.indexOf("-");
+      if (dashIndex !== -1) {
+        lista.splice(dashIndex, 1);
+      }
+      lista.push(item);
+    }
+
+    if (lista.length === 0) {
+      lista.push("-");
+    }
+  }
 
 
+  newPorposta(form: NgForm) {
+    let almenoUnoFalso = false;
+    almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(form.value.descrizione, "descrizione");
+    if(this.accessService.access.ruolo !== "Azienda"){
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(form.value.context, "contesto");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(form.value.esempio, "esempio");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.mvc.join(", "), "mvc");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.articoli.join(", "), "article");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.strategia.join(", "), "strategia");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.principi.join(", "), "principi");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.iso.join(", "), "iso");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.vulnerabilita.join(", "), "cwe");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.categoria.join(", "), "categoria");
+      console.log(this.cash.getCachedResultsPatterns(this.proposta_input));
+    }
+    if (almenoUnoFalso) {
+      this.error = false;
+      if (this.accessService.access.ruolo === "Azienda"){
+       this. sendRiquestIdPattern(form);
+      }
 
+    } else {
+      this.error = true;
+    }
+  }
+
+
+  createArticle(newBody: CreateArticleBody) {
+    this.propostaService.createArticle(newBody)
+      .pipe(
+        tap(_ => {
+           this.router.navigate(['/']).then(success => {
+            if (!success) {
+              console.error('Navigazione fallita');
+            }
+          });
+        }),
+        catchError(error => {
+          console.error('Errore durante la registrazione:', error);
+          return of(null);
+        })
+      )
+      .subscribe();
+  }
+
+ sendRiquestIdPattern(form: NgForm){
+    this.propostaService.findIdAllPatternArticle(Number(this.proposta_input.replace("Article ", ""))).subscribe(ids => {
+           const body: CreateArticleBody ={
+            data: {
+            id_articolo: Number(this.proposta_input.replace("Article ","")),
+            descrizione: form.value.descrizione,
+            stato: 2,
+            design_patterns: ids
+            }
+          }
+          this.createArticle(body);
+        });
+    }
 }

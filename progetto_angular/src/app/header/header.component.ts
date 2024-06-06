@@ -94,4 +94,5 @@ export class HeaderComponent implements OnInit  {
           this.ricercaService.setMessageSearch(message);
         }
 
+
 }

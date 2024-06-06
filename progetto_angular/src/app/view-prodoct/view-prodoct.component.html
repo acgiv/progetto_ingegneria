@@ -78,15 +78,19 @@
               <p class="ms-2">{{ item.Descrizione }}</p>
             </div>
           </div>
-          <div *ngIf="this.viewDirective.vulnerabilita">
+          <div *ngIf="this.viewDirective.vulnerabilita && this.viewDirective.categoria">
             <h3 class="mt-1 mb-3">Vulnerabilità</h3>
+            <div *ngIf="this.viewDirective.vulnerabilita">
             <h6 class="ms-2">CWE Top 25 Most Dangerous Software Weaknesses OWASP Categories Associated:</h6>
               <div *ngFor="let item of this.viewDirective.vulnerabilita">
                 <p class="ms-3">{{ item.id_vulnerabilita }}: {{ item.Descrizione }}</p>
                </div>
-              <h5 class="ms-2">OWASP Top Ten Categories: </h5>
-              <div *ngFor="let item of this.viewDirective.vulnerabilita">
-                <p class="ms-3">{{ item.Categoria }}</p>
+              </div>
+              <div *ngIf="this.viewDirective.categoria">
+                <h5 class="ms-2">OWASP Top Ten Categories: </h5>
+                <div *ngFor="let item of this.viewDirective.categoria">
+                   <p class="ms-3">{{ item.id_owasp }}: {{ item.Descrizione }}</p>
+                </div>
               </div>
             </div>
         </div>

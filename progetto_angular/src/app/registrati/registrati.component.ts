@@ -33,7 +33,7 @@ import {AccessService} from "../service/access.service";
   providedIn: 'root'
 })
 export class RegistratiComponent {
-    @ViewChild('form_register', { static: true }) registerForm!: NgForm;
+  @ViewChild('form_register', { static: true }) registerForm!: NgForm;
   @ViewChild('aziendaForm', { static: true }) aziendaForm!: NgForm;
   email: string = '';
   username: string = '';
@@ -103,7 +103,6 @@ export class RegistratiComponent {
           nome: form.value.nomeazienda,
           partita_iva: form.value.ptiva
         };
-        console.log(newBody);
         this.onRegister(newBody, form);
       }
       this.onRegister(newBody, form);

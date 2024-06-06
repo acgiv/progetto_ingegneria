@@ -25,7 +25,10 @@ export interface FindAllPattern
   ],
     articoli: [
     Articolo
-  ]
+  ],
+    categoria_owasps:[
+      CategoriaOwasps
+    ]
 
 }>
 {}
@@ -54,6 +57,9 @@ export interface Pattern {
   ],
   articoli: [
     Articolo
+  ],
+  categoria_owasps:[
+    CategoriaOwasps
   ]
 }
 
@@ -79,7 +85,6 @@ export interface Vulnerabilita {
   id: number;
   id_vulnerabilita: number;
   Descrizione: string;
-  Categoria: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -103,6 +108,14 @@ export interface Mvc {
   publishedAt: string;
 }
 
+export interface CategoriaOwasps {
+  id: number;
+  id_owasp: number;
+  Descrizione: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
 export interface FindAllMvc {
   data: Mvcs[];
   meta: Meta;
@@ -174,11 +187,47 @@ export interface FindAllIso {
 
 export interface Isos {
   id: number;
-  attributes: StrategiasIsos;
+  attributes: AttributesIsos;
 }
 
-export interface StrategiasIsos {
+export interface AttributesIsos {
   id_iso: number;
+  Descrizione: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface FindAllVulnerabilita {
+  data: Vulnerabilitas[];
+  meta: Meta;
+}
+
+export interface Vulnerabilitas {
+  id: number;
+  attributes: AttributeVulerabilitas;
+}
+
+export interface AttributeVulerabilitas {
+  id_vulnerabilita: number;
+  Descrizione: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface FindAllCategoria {
+  data: Categorias[];
+  meta: Meta;
+}
+
+export interface Categorias {
+  id: number;
+  attributes: AttributeCategorias;
+}
+
+export interface AttributeCategorias {
+  id_owasp: number;
   Descrizione: string;
   createdAt: string;
   updatedAt: string;

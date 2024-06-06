@@ -17,5 +17,10 @@ module.exports = {
         path: "/articolo/findTitolo",
         handler: "articolo.findTitolo",
       }, 
+      {
+        method: "POST",
+        path: "/articolo/findIdPattern",
+        handler: "articolo.findIdPattern",
+      }
     ],
   };

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Articolo, FindAllPattern, Mvc, Pattern} from "./interface/search";
+import {Articolo, Pattern} from "./interface/search";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,8 @@ export class CashService {
    public  cachePrincipi: string[] = [];
    public  cacheStrategia: string[] = [];
    public  cacheIso: string[] = [];
+   public  cacheVulnerabilita: string[] = [];
+   public  cacheCategoria: string[] = [];
   constructor() { }
 
     setCachedResults(query: string, results: any, type:string): void {
@@ -21,13 +23,7 @@ export class CashService {
       }
     }
 
-   getCachedResults(query: string, type: string): any {
-    if (type === 'articolo'){
-        return this.cacheArticolo.get(query);
-    }else{
-        return this.cachePattern.get(query);
-    }
-  }
+
    getCachedResult(type: string): any {
     if (type === 'articolo'){
       return this.cacheArticolo;

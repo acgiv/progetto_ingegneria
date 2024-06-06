@@ -3,12 +3,10 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 
 import {
-  FindAllArticle, FindAllIso,
-  FindAllMvc,
+  FindAllArticle, FindAllCategoria, FindAllIso,
   FindAllPattern,
   FindAllPrincipi,
-  FindAllStrategia,
-  Mvc,
+  FindAllStrategia, FindAllVulnerabilita,
   SearchMessage
 } from "./interface/search";
 
@@ -42,19 +40,27 @@ export class RicercaService {
   }
 
    findManyMvc(): Observable<any> {
-    return this.http.get<any>('http://localhost:1337/api/mvcs');
+    return this.http.get<any>(this.apiUrl+'/mvcs');
   }
 
   findManyPrincipi(): Observable<any> {
-    return this.http.get<FindAllPrincipi>('http://localhost:1337/api/principis');
+    return this.http.get<FindAllPrincipi>(this.apiUrl+'/principis');
   }
 
    findManyStrategia(): Observable<any> {
-    return this.http.get<FindAllStrategia>('http://localhost:1337/api/strategias');
+    return this.http.get<FindAllStrategia>(this.apiUrl+'/strategias');
   }
 
    findManyIso(): Observable<any> {
-    return this.http.get<FindAllIso>('http://localhost:1337/api/iso-92-4210s');
+    return this.http.get<FindAllIso>(this.apiUrl+'/iso-92-4210s');
+  }
+
+   findManyVulnerabilita(): Observable<any> {
+    return this.http.get<FindAllVulnerabilita>(this.apiUrl+'/vulnerabilitas');
+  }
+
+  findManyCategoria(): Observable<any> {
+   return this.http.get<FindAllCategoria>(this.apiUrl+'/categoria-owasps');
   }
 
   search(body: any): Observable<any> {
@@ -69,6 +75,7 @@ export class RicercaService {
   setMessageSearch( message: SearchMessage){
      this.messageSubject.next(message);
   }
+
 
 
 }

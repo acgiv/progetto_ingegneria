@@ -15,7 +15,7 @@
     "id_articolo": {
       "type": "integer",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "descrizione": {
       "type": "text"

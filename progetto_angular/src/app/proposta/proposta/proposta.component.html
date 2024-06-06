@@ -1,7 +1,7 @@
 <div class="container-fluid vh-100 d-flex  justify-content-center">
   <div class="row justify-content-center w-100">
     <div class="col-md-11">
-      <form (ngSubmit)="onProposta(f)" #f="ngForm">
+      <form  #f="ngForm">
         <div class="mb-4">
           <label class="pt-4 pb-2" for="rule"><span class="fw-semibold">{{ this.label }} </span></label>
           <div class="dropdown">
@@ -22,7 +22,7 @@
                           ngModel
                           required autocomplete="off" [(ngModel)]="this.descrizione"></textarea>
           </div>
-          <div *ngIf="this.accessService.access.ruolo === 'Sviluppatore'">
+          <div *ngIf="this.accessService.access.ruolo === 'Sviluppatore'" >
             <label for="Context" class="form-label mt-3">
               <span class="fw-semibold">Context</span>
             </label>
@@ -30,11 +30,11 @@
                   <textarea type="text" id="context" class="form-control" name="context" placeholder="context" ngModel
                             required autocomplete="off" [(ngModel)]="this.contesto"></textarea>
             </div>
-            <label for="Exemple" class="form-label mt-3">
+            <label for="esempio" class="form-label mt-3">
               <span class="fw-semibold">Exemple</span>
             </label>
             <div class="input-group">
-                  <textarea type="text" id="Exemple" class="form-control" name="exemple" placeholder="exemple" ngModel
+                  <textarea type="text" id="esempio" class="form-control" name="esempio" placeholder="exemple" ngModel
                             required autocomplete="off" [(ngModel)]="this.esempi"></textarea>
             </div>
             <div class="mb-3">
@@ -59,7 +59,7 @@
                   {{ this.articoli.join(", ") }} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
                 </button>
                 <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickableArticle}">
-                  <li *ngFor="let ar of this.propostaDirective.fILDaLLarticoli">
+                  <li *ngFor="let ar of this.fILDaLLarticoli">
                     <a class="dropdown-item" (click)="selectItemArticoli(ar)">{{ ar }}</a>
                   </li>
                 </ul>
@@ -107,8 +107,42 @@
                 </ul>
               </div>
             </div>
+            <div class="mb-3">
+              <label class="pt-4 pb-2" for="Cwe"><span class="fw-semibold">CWE Top 25 Most Dangerous Software Weaknesses OWASP Categories Associated</span></label>
+              <div class="dropdown">
+                <button id="Cwe" (click)="selectVulnerabilita()" class="btn bg-white  border border-1 w-100 text-start "
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{this.vulnerabilita.join(", ")}} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+                </button>
+                <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickableVulnerabilita}">
+                  <li *ngFor="let vu of this.cash.cacheVulnerabilita">
+                    <a class="dropdown-item" (click)="selectItemVulnerabilita(vu)">{{ vu }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mb-5">
+              <label class="pt-4 pb-2" for="Owasp"><span class="fw-semibold">OWASP Top Ten Categories</span></label>
+              <div class="dropdown">
+                <button id="Owasp" (click)="selectCategoria()" class="btn bg-white  border border-1 w-100 text-start "
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{this.categoria.join(", ")}} <span class="dropdown-toggle position-absolute me-3 end-0 "></span>
+                </button>
+                <ul class="dropdown-menu w-100" [ngClass]="{'show': this.clickableCategoria}">
+                  <li *ngFor="let cat of this.cash.cacheCategoria">
+                    <a class="dropdown-item" (click)="selectItemCategoria(cat)">{{ cat }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
+          <p class=" text-danger mt-2 text-center"   *ngIf="error">Nessun campo risulta essere modificato!</p>
+              <div class="d-flex pt-3 pb-5 justify-content-center align-items-center flex-column">
+              <button class="mt-4 btn-primary btn w-25 py-2 text-center" (click)="newPorposta(f)"
+                      type="submit"> Proponi
+              </button>
+            </div>
       </form>
     </div>
   </div>

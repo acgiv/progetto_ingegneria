@@ -69,6 +69,12 @@
     },
     "descrizione": {
       "type": "text"
+    },
+    "categoria_owasps": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::categoria-owasp.categoria-owasp",
+      "mappedBy": "design_patterns"
     }
   }
 }

@@ -38,6 +38,13 @@ module.exports = createCoreController('api::articolo.articolo',
       return result;
 
   },
+  async findIdPattern(ctx) {
+    const { idArticolo } = ctx.request.body;
+    const result = await strapi.service('api::articolo.articolo').findIdPattern(idArticolo);
+    return result;
+  
+
+  },
 
  }),
  

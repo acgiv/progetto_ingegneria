@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 import {catchError, EMPTY, finalize, map, Observable, tap} from "rxjs";
 import {
-  Articolo,
+  Articolo, CategoriaOwasps,
   FindAllArticle,
   FindAllPattern,
   Iso, Mvc, Pattern,
@@ -28,6 +28,7 @@ export class ViewDirective {
   strategia :  Strategia[] | undefined;
   iso : Iso[] | undefined;
   vulnerabilita : Vulnerabilita[] |undefined;
+  categoria : CategoriaOwasps[] |undefined;
   principi : PrincipioPbd[] |undefined;
   root:string ;
   constructor(protected router: Router, private ricercaService: RicercaService,  protected  cash: CashService) {
@@ -80,6 +81,7 @@ export class ViewDirective {
                   this.esempi = element.esempio.replace("\n", "<br> <br>");
                   this.strategia = element.strategia;
                   this.vulnerabilita = element.vulerabilita;
+                  this.categoria = element.categoria_owasps;
                   this.principi = element.principi_pbd;
                   this.mvc = element.mvc;
                   this.articoli = element.articoli;

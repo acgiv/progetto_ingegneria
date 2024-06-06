@@ -15,11 +15,12 @@ module.exports = createCoreService('api::design-pattern.design-pattern', ({ stra
         switch(filtro){
             case "Pattern":
                     rspost = this.setPattern(await strapi.db.query('api::design-pattern.design-pattern').findOne({
-                       populate: ["mvcs","stato", "articolos","iso_92_4210s","strategias", "vulnerabilitas", "principi_pbds"], 
+                       populate: ["mvcs","stato", "articolos","iso_92_4210s","strategias", "vulnerabilitas", "principi_pbds", "categoria_owasps"], 
                        where: { 
                            titolo: {$eq: nome} ,
                        }
-                       }) );         
+                       }) );      
+                      
                 break;
             case "Articolo GDPR":
                 rspost =  await strapi.service('api::articolo.articolo').findArticoloByTitle(Number(nome));
@@ -42,7 +43,7 @@ module.exports = createCoreService('api::design-pattern.design-pattern', ({ stra
                 break;    
             case "Vulnerabilità":
                 rspost = this.setVulnerabilita(await strapi.db.query('api::design-pattern.design-pattern').findOne({
-                    populate: ["vulnerabilitas"], 
+                    populate: ["vulnerabilitas", "categoria_owasps"], 
                     where: { 
                         titolo: {$eq: nome} ,
                     }
@@ -57,6 +58,7 @@ module.exports = createCoreService('api::design-pattern.design-pattern', ({ stra
                     }));
                 break;  
             case "Strategia":
+                console.log(nome);   
                 rspost =  this.setStrategia( await strapi.db.query('api::design-pattern.design-pattern').findOne({
                     populate: ["strategias"], 
                     where: { 
@@ -90,7 +92,7 @@ module.exports = createCoreService('api::design-pattern.design-pattern', ({ stra
             principi_pbd:  entries.principi_pbds,
             mvc: entries.mvcs,
             articoli: entries.articolos,
-
+            categoria_owasps: entries.categoria_owasps
           }
     },
     setPattern(entries) {
@@ -107,7 +109,7 @@ module.exports = createCoreService('api::design-pattern.design-pattern', ({ stra
             principi_pbd:  entries.principi_pbds,
             mvc: entries.mvcs,
             articoli: entries.articolos,
-
+            categoria_owasps: entries.categoria_owasps
           }
     }, setMvc(entries) {
         return {
@@ -147,6 +149,7 @@ module.exports = createCoreService('api::design-pattern.design-pattern', ({ stra
             descrizione: entries.descrizione,
             titolo: entries.titolo,
             vulerabilita:  entries.vulnerabilitas,
+            categoria_owasps: entries.categoria_owasps
         }
     }
 }));
