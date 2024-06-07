@@ -13,7 +13,7 @@ import {
 } from "../../service/interface/search";
 import {PropostaDirective} from "../proposta.directive";
 import {PropostaService} from "../proposta.service";
-import {CreateArticleBody, CreatePatternBody} from "../proposta";
+import {CreateArticleBody, CreatePatternBody, ErrorMessageControl} from "../proposta";
 
 
 
@@ -53,9 +53,9 @@ export class PropostaComponent {
   iso: string[] = [];
   vulnerabilita: string[] = [];
   categoria: string[] = [];
-  label_search: string;
+  label_search: string = "";
   label: string = "";
-  error: boolean = false;
+  errorMessage: ErrorMessageControl;
 
 
   constructor(
@@ -66,14 +66,23 @@ export class PropostaComponent {
     private propostaService: PropostaService,
   ) {
     this.loadArticoli();
-    console.log(this.accessService.access.ruolo);
-    if (this.accessService.access.ruolo === "azienda") {
+    if (this.accessService.getRuolo() === "azienda") {
       this.label_search = "articolo";
       this.label = "Articolo";
-    } else {
+    } else if (this.accessService.getRuolo() === "sviluppatore"){
       this.label_search = "pattern";
       this.loadPattern();
       this.label = "Pattern";
+    }
+    this.errorMessage ={
+      emptyCategory: false,
+      emptyIso:false,
+      emptyMvc:false,
+      emptyStrategy:false,
+      emptyArticoli:false,
+      empyPrincipi:false,
+      notEdit:false,
+      emptyVulnerabilita:false
     }
   }
 
@@ -179,7 +188,8 @@ export class PropostaComponent {
   selectItem(item: any) {
     this.proposta_input = item;
     this.clickable = false;
-    if (this.accessService.access.ruolo === "Azienda") {
+    this.errorMessage.notEdit=false;
+    if (this.accessService.getRuolo() === "azienda") {
       this.descrizione = this.cash.getCachedResultsArticle(item).descrizione;
       this.propostaDirective.text_compare.descrizione = this.cash.getCachedResultsArticle(item).descrizione
     } else {
@@ -264,36 +274,43 @@ export class PropostaComponent {
 
   selectItemMvc(item: any) {
     this.selectItemMenu(item, this.mvc);
+    this.errorMessage.emptyMvc= this.propostaDirective.isEmptylementsList(this.mvc);
     this.clickableMvc = false;
   }
 
   selectItemArticoli(item: any) {
     this.selectItemMenu(item, this.articoli);
+     this.errorMessage.emptyArticoli = this.propostaDirective.isEmptylementsList(this.articoli);
     this.clickableArticle = false;
   }
 
   selectItemPrincipi(item: string) {
     this.selectItemMenu(item, this.principi);
+    this.errorMessage.empyPrincipi = this.propostaDirective.isEmptylementsList(this.principi);
     this.clickablePrincipi = false;
   }
 
   selectItemStrategia(item: string) {
     this.selectItemMenu(item, this.strategia);
+    this.errorMessage.emptyStrategy = this.propostaDirective.isEmptylementsList(this.strategia);
     this.clickableStrategia = false;
   }
 
   selectItemIso(item: string) {
     this.selectItemMenu(item, this.iso);
+    this.errorMessage.emptyIso = this.propostaDirective.isEmptylementsList(this.iso);
     this.clickableIso = false;
   }
 
   selectItemVulnerabilita(item: string) {
     this.selectItemMenu(item, this.vulnerabilita);
+      this.errorMessage.emptyVulnerabilita = this.propostaDirective.isEmptylementsList(this.vulnerabilita);
     this.clickableVulnerabilita = false;
   }
 
   selectItemCategoria(item: string) {
     this.selectItemMenu(item, this.categoria);
+       this.errorMessage.emptyCategory = this.propostaDirective.isEmptylementsList(this.categoria);
     this.clickableCategoria = false;
   }
 
@@ -318,12 +335,11 @@ export class PropostaComponent {
   newPorposta(form: NgForm) {
     let almenoUnoFalso = false;
     almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(form.value.descrizione, "descrizione");
-    if(this.accessService.access.ruolo !== "Azienda"){
+    if(this.accessService.getRuolo() !== "azienda"){
         almenoUnoFalso = this.isModificiatoPattern(almenoUnoFalso, form);
     }
     if (almenoUnoFalso) {
-      this.error = false;
-      if (this.accessService.access.ruolo === "Azienda"){
+      if (this.accessService.getRuolo() === "azienda"){
        this. sendRiquestIdPattern(form);
       }else{
         const cachedPattern = this.cash.getCachedResultsPatterns(this.proposta_input);
@@ -350,7 +366,7 @@ export class PropostaComponent {
       }
 
     } else {
-      this.error = true;
+      this.errorMessage.notEdit = true;
     }
   }
 
@@ -371,13 +387,13 @@ export class PropostaComponent {
     isModificiatoPattern(almenoUnoFalso: boolean, form:NgForm){
       almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(form.value.context, "contesto");
       almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(form.value.esempio, "esempio");
-      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.mvc.join(", "), "mvc");
-      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.articoli.join(", "), "article");
-      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.strategia.join(", "), "strategia");
-      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.principi.join(", "), "principi");
-      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.iso.join(", "), "iso");
-      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.vulnerabilita.join(", "), "cwe");
-      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.categoria.join(", "), "categoria");
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.mvc.join(", "), "mvc") && !this.propostaDirective.isEmptylementsList(this.mvc);
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.articoli.join(", "), "article") ;
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.strategia.join(", "), "strategia") && !this.propostaDirective.isEmptylementsList(this.strategia);
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.principi.join(", "), "principi") && !this.propostaDirective.isEmptylementsList(this.principi);
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.iso.join(", "), "iso") && !this.propostaDirective.isEmptylementsList(this.iso);
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.vulnerabilita.join(", "), "cwe") && !this.propostaDirective.isEmptylementsList(this.vulnerabilita);
+      almenoUnoFalso = almenoUnoFalso || !this.propostaDirective.isEqualDescription(this.categoria.join(", "), "categoria")  && !this.propostaDirective.isEmptylementsList(this.vulnerabilita);
       return almenoUnoFalso;
     }
 }

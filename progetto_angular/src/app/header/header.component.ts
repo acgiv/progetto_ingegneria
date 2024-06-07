@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit  {
   isprofileOpen:boolean = false;
   isPropostaActive:boolean = false;
   selectedItem = "Pattern";
+  test_search : string = "Search Pattern";
 
     ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -61,7 +62,7 @@ export class HeaderComponent implements OnInit  {
     }
 
       isAmministratore(): boolean {
-        return this.accessService.access.ruolo === "amministratore";
+        return this.accessService.getRuolo() === "amministratore";
      }
 
        toggleNavbar() {
@@ -75,6 +76,7 @@ export class HeaderComponent implements OnInit  {
 
       selectItem(item: string) {
           this.selectedItem = item;
+          this.setTextSearch();
           this.isfiltraOpen = false;
         }
 
@@ -92,6 +94,14 @@ export class HeaderComponent implements OnInit  {
             filtro : this.selectedItem
           };
           this.ricercaService.setMessageSearch(message);
+        }
+
+        setTextSearch(){
+          if (this.selectedItem === "Articolo GDPR"){
+            this.test_search = "Search Articolo";
+          } else{
+            this.test_search = "Search Pattern";
+          }
         }
 
 

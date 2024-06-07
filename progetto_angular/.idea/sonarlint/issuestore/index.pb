@@ -99,3 +99,5 @@ L
 src/app/proposta/proposta.ts,2\4\240db80b168848b41885d614ec2a1adad964a412
 T
 $src/app/proposta/proposta.service.ts,b\0\b0e77388cb4f3b5ca669ab3c3bff122528c568b7
+O
+src/app/home/home.component.css,5\0\50e8f310a30206859a0ff639ed91120cb25f19a8

@@ -17,52 +17,59 @@ module.exports = createCoreService('api::design-pattern.design-pattern', ({ stra
                     rspost = this.setPattern(await strapi.db.query('api::design-pattern.design-pattern').findOne({
                        populate: ["mvcs","stato", "articolos","iso_92_4210s","strategias", "vulnerabilitas", "principi_pbds", "categoria_owasps"], 
                        where: { 
-                           titolo: {$eq: nome} ,
+                           titolo: {$eq: nome} 
                        }
-                       }) );      
+                       }));      
                       
                 break;
             case "Articolo GDPR":
-                rspost =  await strapi.service('api::articolo.articolo').findArticoloByTitle(Number(nome));
+
+            rspost = await strapi.db.query('api::articolo.articolo').findOne({
+                populate: ["stato"], 
+                where: { 
+                  id_articolo: Number(nome)
+                }
+                });
+            
                 break;
             case "Mvc":
                 rspost = this.setMvc(await strapi.db.query('api::design-pattern.design-pattern').findOne({
-                    populate: ["mvcs"], 
+                    populate: ["mvcs", "stato"], 
                     where: { 
-                        titolo: {$eq: nome} ,
+                        titolo: {$eq: nome} 
                     }
                     }));
                 break;
             case "Principi":
                 rspost = this.setPrincipi( await strapi.db.query('api::design-pattern.design-pattern').findOne({
-                    populate: ["principi_pbds"], 
+                    populate: ["principi_pbds", "stato"], 
                     where: { 
-                        titolo: {$eq: nome} ,
+                        titolo: {$eq: nome} 
                     }
                 }));
                 break;    
             case "Vulnerabilità":
                 rspost = this.setVulnerabilita(await strapi.db.query('api::design-pattern.design-pattern').findOne({
-                    populate: ["vulnerabilitas", "categoria_owasps"], 
+                    populate: ["vulnerabilitas", "categoria_owasps", "stato"], 
                     where: { 
-                        titolo: {$eq: nome} ,
+                        titolo: {$eq: nome} 
                     }
                     })); 
                 break;  
             case "ISO 92-4210":
                 rspost =  this.setIso( await strapi.db.query('api::design-pattern.design-pattern').findOne({
-                    populate: ["iso_92_4210s"], 
+                    populate: ["iso_92_4210s", "stato"], 
                     where: { 
-                        titolo: {$eq: nome} ,
+                        titolo: {$eq: nome} 
                     }
                     }));
                 break;  
             case "Strategia":
                 console.log(nome);   
                 rspost =  this.setStrategia( await strapi.db.query('api::design-pattern.design-pattern').findOne({
-                    populate: ["strategias"], 
+                    populate: ["strategias", "stato"], 
                     where: { 
-                        titolo: {$eq: nome} ,
+                        titolo: {$eq: nome} 
                     }
                     }));
                 break;  

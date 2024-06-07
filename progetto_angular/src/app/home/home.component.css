@@ -1,0 +1,96 @@
+
+.heros {
+  height: 70vh; /* Altezza del hero element uguale all'altezza della pagina */
+  width: 100vw; /* Larghezza del hero element uguale alla larghezza della pagina */
+  position: absolute; /* Posizionamento assoluto rispetto all'elemento padre */
+  top: 0; /* Allinea il hero element all'inizio della pagina */
+  left: 0; /* Allinea il hero element alla sinistra della pagina */
+  background-size: cover; /* Riempi l'intero contenitore con l'immagine */
+  background-position: center; /* Posiziona l'immagine al centro */
+  background-repeat: no-repeat; /* Non ripetere l'immagine */
+  display: flex; /* Per allineare il contenuto al centro */
+  justify-content: center; /* Allinea il contenuto al centro orizzontalmente */
+  align-items: center; /* Allinea il contenuto al centro verticalmente */
+  z-index: -1;
+}
+
+.hero{
+  height: 70vh; /* Altezza del hero element uguale all'altezza della pagina */
+  width: 100vw; /* Larghezza del hero element uguale alla larghezza della pagina */
+   background-size: cover; /* Riempi l'intero contenitore con l'immagine */
+  background-position: center; /* Posiziona l'immagine al centro */
+  background-repeat: no-repeat; /* Non ripetere l'immagine */
+   display: flex; /* Per allineare il contenuto al centro */
+  justify-content: center; /* Allinea il contenuto al centro orizzontalmente */
+  align-items: center; /* Allinea il contenuto al centro verticalmente */
+}
+
+.hero-container{
+   display: flex;
+}
+
+.text-hero {
+  color: white;
+
+}
+
+.word-hero {
+  font-weight: bold;
+  font-family: serif, "Rage Italic";
+  font-style: oblique;
+}
+
+.small-img {
+  width: 150px;
+  height: 150px;
+}
+
+.small-img_what {
+  width: 190px;
+  height: 150px;
+}
+.small-img-come{
+  width: 150px;
+  height: 150px;
+ }
+
+.text_color{
+  color: #5F6367;
+}
+
+.border-start-2 {
+  border-left: 5px solid;
+
+  border-left-color: #EF8200;
+}
+
+.font-weight-bold {
+  font-weight: bold !important; /* Applica il peso del testo grassetto con importanza */
+}
+
+.color_1{
+  color: #3976BF;
+}
+.color_2{
+  color: #18BC9F;
+}
+.color_3{
+  color: #74BE4B;
+}
+.color_4{
+  color: #ECB117;
+}.color_5{
+  color: #F68812;
+}.color_6{
+  color: #EE2642;
+}.color_7{
+  color: #810B19;
+}
+ .color_8{
+  color: #735407;
+}
+
+
+
+
+

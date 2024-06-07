@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import {Directive} from '@angular/core';
 import {catchError, EMPTY, finalize, tap} from "rxjs";
 import {
   FindAllArticle,
@@ -13,12 +13,13 @@ import {RicercaService} from "../service/ricerca.service";
 import {CashService} from "../service/cash.service";
 import {TextCompare} from "./proposta";
 
+
 @Directive({
   selector: '[appProposta]',
   standalone: true
 })
 export class PropostaDirective {
-  cacheArticolId:   Map<string, number> = new Map();
+  cacheArticolId: Map<string, number> = new Map();
   text_compare: TextCompare = {
     descrizione: '',
     contesto: '',
@@ -53,7 +54,7 @@ export class PropostaDirective {
           for (const element of data) {
             if (element.stato.nome === "Validated") {
               console.log("Article " + element.id_articolo);
-               this.cacheArticolId.set("Article " + element.id_articolo , element.id);
+              this.cacheArticolId.set("Article " + element.id_articolo, element.id);
 
             }
           }
@@ -238,48 +239,38 @@ export class PropostaDirective {
     return true;
   }
 
+  isEmptylementsList(list1: string[]) {
+    const set1 = new Set(list1);
+    return set1.size === 1 && set1.has("-");
+  }
+
   get_list_id(tipo: string, items: string): number[] {
-    let lista : number[] = [];
+    let lista: number[] = [];
     let elem: string[] = items.split(", ");
-    switch (tipo) {
-        case "mvc":
-             for (const element of elem) {
-               lista.push(Number(this.cash.cacheMvcId.get(element)));
-             }
-             break;
-        case "principi":
-             for (const element of elem) {
-               lista.push(Number(this.cash.cachePrincipiId.get(element)));
-             }
-             break;
-        case "strategia":
-             for (const element of elem) {
-               lista.push(Number(this.cash.cacheStrategiaId.get(element)));
-             }
-             break;
-        case "iso":
-             for (const element of elem) {
-               lista.push(Number(this.cash.cacheIsoId.get(element)));
-             }
-             break;
-        case "cwe":
-             for (const element of elem) {
-               lista.push(Number(this.cash.cacheVulnerabilitaId.get(element)));
-             }
-             break;
-        case "categoria":
-             for (const element of elem) {
-               lista.push(Number(this.cash.cacheCategoriaId.get(element)));
-             }
-             break;
-        case "articoli":
-             for (const element of elem) {
-               lista.push(Number(this.cacheArticolId.get(element)));
-             }
-             break;
-        default:
-             break;
+
+    // Mappa dei tipi alle relative mappe cache
+    const tipoMappa: { [key: string]: Map<string, number> } = {
+      "mvc": this.cash.cacheMvcId,
+      "principi": this.cash.cachePrincipiId,
+      "strategia": this.cash.cacheStrategiaId,
+      "iso": this.cash.cacheIsoId,
+      "cwe": this.cash.cacheVulnerabilitaId,
+      "categoria": this.cash.cacheCategoriaId,
+      "articoli": this.cacheArticolId
+    };
+
+    const mappa = tipoMappa[tipo];
+    if (mappa) {
+      if (tipo !== "articoli" || !this.isEmptylementsList(elem)) {
+        for (const element of elem) {
+          const id = mappa.get(element);
+          if (id !== undefined) {
+            lista.push(Number(id));
+          }
+        }
+      }
     }
+
     return lista;
   }
 }

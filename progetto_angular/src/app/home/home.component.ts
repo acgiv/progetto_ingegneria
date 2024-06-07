@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {NgOptimizedImage} from "@angular/common";
 
 
 
@@ -7,6 +8,7 @@ import {Component} from '@angular/core';
   selector: 'app-home',
   standalone: true,
   imports: [
+    NgOptimizedImage
 
   ],
   templateUrl: './home.component.html',

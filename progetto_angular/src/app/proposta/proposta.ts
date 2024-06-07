@@ -39,3 +39,13 @@ export interface CreatePatternBody{
   }
 }
 
+export interface ErrorMessageControl{
+  notEdit: boolean;
+  emptyMvc:boolean;
+  emptyStrategy:boolean;
+  emptyIso:boolean;
+  emptyCategory:boolean;
+  empyPrincipi:boolean;
+  emptyArticoli:boolean;
+  emptyVulnerabilita:boolean;
+}

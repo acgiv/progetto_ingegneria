@@ -23,7 +23,7 @@
                           ngModel
                           required autocomplete="off" [(ngModel)]="this.descrizione"></textarea>
           </div>
-          <div *ngIf="this.accessService.access.ruolo !== 'azienda'" >
+          <div *ngIf="this.accessService.getRuolo() !== 'azienda'" >
             <label for="Context" class="form-label mt-3">
               <span class="fw-semibold">Context</span>
             </label>
@@ -51,6 +51,7 @@
                   </li>
                 </ul>
               </div>
+              <p class=" text-danger mt-2 "  *ngIf="this.errorMessage.emptyMvc">Il campo Mvc non può essere vuoto!</p>
             </div>
             <div class="mb-3">
               <label class="pt-4 pb-2" for="article"><span class="fw-semibold">Article GDPR Compliance with the Pattern</span></label>
@@ -79,6 +80,7 @@
                   </li>
                 </ul>
               </div>
+              <p class=" text-danger mt-2 "  *ngIf="this.errorMessage.empyPrincipi">Il campo Privacy By Design Principles non può essere vuoto!</p>
             </div>
             <div class="mb-3">
               <label class="pt-4 pb-2" for="strategia"><span class="fw-semibold">Strategies</span></label>
@@ -93,6 +95,7 @@
                   </li>
                 </ul>
               </div>
+              <p class=" text-danger mt-2 "  *ngIf="this.errorMessage.emptyStrategy">Il campo Strategies non può essere vuoto!</p>
             </div>
             <div class="mb-3">
               <label class="pt-4 pb-2" for="Iso"><span class="fw-semibold">ISO 9241-210 Phase</span></label>
@@ -107,6 +110,7 @@
                   </li>
                 </ul>
               </div>
+              <p class=" text-danger mt-2 "  *ngIf="this.errorMessage.emptyIso">Il campo ISO 9241-210 Phase non può essere vuoto!</p>
             </div>
             <div class="mb-3">
               <label class="pt-4 pb-2" for="Cwe"><span class="fw-semibold">CWE Top 25 Most Dangerous Software Weaknesses OWASP Categories Associated</span></label>
@@ -121,6 +125,7 @@
                   </li>
                 </ul>
               </div>
+               <p class="text-danger mt-2"  *ngIf="this.errorMessage.emptyVulnerabilita">Il campo CWE non può essere vuoto!</p>
             </div>
             <div class="mb-5">
               <label class="pt-4 pb-2" for="Owasp"><span class="fw-semibold">OWASP Top Ten Categories</span></label>
@@ -135,10 +140,13 @@
                   </li>
                 </ul>
               </div>
+               <p class=" text-danger mt-2"  *ngIf="this.errorMessage.emptyCategory">Il campo OWASP Top Ten Categories non può essere vuoto!</p>
             </div>
+
           </div>
+
         </div>
-          <p class=" text-danger mt-2 text-center"   *ngIf="error">Nessun campo risulta essere modificato!</p>
+          <p class=" text-danger mt-2 text-center"   *ngIf="this.errorMessage.notEdit"> Nessun campo risulta essere modificato o è vuoto!</p>
               <div class="d-flex pt-3 pb-5 justify-content-center align-items-center flex-column">
               <button class="mt-4 btn-primary btn w-25 py-2 text-center" (click)="newPorposta(f)"
                       type="submit"> Proponi
