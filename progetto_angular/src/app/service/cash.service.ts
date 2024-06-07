@@ -13,6 +13,12 @@ export class CashService {
    public  cacheIso: string[] = [];
    public  cacheVulnerabilita: string[] = [];
    public  cacheCategoria: string[] = [];
+   public cacheMvcId: Map<string, number> = new Map();
+   public cachePrincipiId:  Map<string, number> = new Map();
+   public cacheStrategiaId:   Map<string, number> = new Map();
+   public cacheIsoId:   Map<string, number> = new Map();
+   public cacheVulnerabilitaId:   Map<string, number> = new Map();
+   public cacheCategoriaId:   Map<string, number> = new Map();
   constructor() { }
 
     setCachedResults(query: string, results: any, type:string): void {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {catchError, Observable, of, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {CreateArticleBody, CreatePatternBody} from "./proposta";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -8,11 +10,14 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class PropostaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
    private apiUrl = 'http://localhost:1337/api';
 
-    createArticle(body: any): Observable<any> {
+    SendcreateArticle(body: any): Observable<any> {
        const headers = new HttpHeaders({'Content-Type': 'application/json'});
        return this.http.post<any>(this.apiUrl+'/articolos', body, {headers});
    }
@@ -22,18 +27,56 @@ export class PropostaService {
        return this.http.post<any>(this.apiUrl+'/articolo/findIdPattern', body, {headers});
    }
 
+    sendcreatePattern(body: any): Observable<any> {
+       const headers = new HttpHeaders({'Content-Type': 'application/json'});
+       return this.http.post<any>("http://localhost:1337/api/design-patterns", body, {headers});
+   }
 
    findIdAllPatternArticle(id: number): Observable<number[]> {
     return this.findAllPatternArticle({ idArticolo: id })
       .pipe(
-        tap(response => {
-
-        }),
+        tap(_ => {}),
         catchError(error => {
           console.error('Errore durante la registrazione:', error);
           return of([]);
         })
       );
+  }
+
+    createArticle(newBody: CreateArticleBody) {
+    this.SendcreateArticle(newBody)
+      .pipe(
+        tap(_ => {
+           this.router.navigate(['/']).then(success => {
+            if (!success) {
+              console.error('Navigazione fallita');
+            }
+          });
+        }),
+        catchError(error => {
+          console.error('Errore durante la registrazione:', error);
+          return of(null);
+        })
+      )
+      .subscribe();
+  }
+
+     createPattern(newBody: CreatePatternBody) {
+    this.sendcreatePattern(newBody)
+      .pipe(
+        tap(_ => {
+           this.router.navigate(['/']).then(success => {
+            if (!success) {
+              console.error('Navigazione fallita');
+            }
+          });
+        }),
+        catchError(error => {
+          console.error('Errore durante la registrazione:', error);
+          return of(null);
+        })
+      )
+      .subscribe();
   }
 
 }

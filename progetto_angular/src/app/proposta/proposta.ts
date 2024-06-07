@@ -19,6 +19,23 @@ export interface CreateArticleBody{
   stato: number;
   design_patterns: number[];
      }
+}
 
+export interface CreatePatternBody{
+  data: {
+     id_pattern: number;
+     titolo:string;
+      contesto:string;
+      descrizione: string;
+      esempio: string;
+      stato: number;
+      iso_92_4210s: number[];
+      principi_pbds: number[];
+      strategias: number[];
+      mvcs: number[];
+      vulnerabilitas :number[];
+      articolos: number[];
+      categoria_owasps:number[];
+  }
 }
 

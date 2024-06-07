@@ -35,6 +35,7 @@ export interface FindAllPattern
 
 
 export interface Pattern {
+    id_pattern?:number
     titolo: string,
     descrizione?:string;
     contesto: string,

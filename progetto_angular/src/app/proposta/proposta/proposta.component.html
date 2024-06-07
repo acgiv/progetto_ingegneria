@@ -1,6 +1,7 @@
 <div class="container-fluid vh-100 d-flex  justify-content-center">
   <div class="row justify-content-center w-100">
     <div class="col-md-11">
+      <h2 class="d-flex justify-content-center mt-4" >Proposta {{this.label}}</h2>
       <form  #f="ngForm">
         <div class="mb-4">
           <label class="pt-4 pb-2" for="rule"><span class="fw-semibold">{{ this.label }} </span></label>
@@ -22,7 +23,7 @@
                           ngModel
                           required autocomplete="off" [(ngModel)]="this.descrizione"></textarea>
           </div>
-          <div *ngIf="this.accessService.access.ruolo === 'Sviluppatore'" >
+          <div *ngIf="this.accessService.access.ruolo !== 'azienda'" >
             <label for="Context" class="form-label mt-3">
               <span class="fw-semibold">Context</span>
             </label>

@@ -1,6 +1,7 @@
 import { Directive } from '@angular/core';
 import {catchError, EMPTY, finalize, tap} from "rxjs";
 import {
+  FindAllArticle,
   FindAllCategoria,
   FindAllIso,
   FindAllMvc,
@@ -17,7 +18,7 @@ import {TextCompare} from "./proposta";
   standalone: true
 })
 export class PropostaDirective {
-
+  cacheArticolId:   Map<string, number> = new Map();
   text_compare: TextCompare = {
     descrizione: '',
     contesto: '',
@@ -33,6 +34,7 @@ export class PropostaDirective {
 
   constructor(private ricercaService: RicercaService, protected cash: CashService) {
     this.popolationMenu();
+    this.loadArticoli();
   }
 
   popolationMenu() {
@@ -44,12 +46,36 @@ export class PropostaDirective {
     this.loadCategoria();
   }
 
+  loadArticoli(): void {
+    this.ricercaService.findManyArticle()
+      .pipe(
+        tap((data: FindAllArticle) => {
+          for (const element of data) {
+            if (element.stato.nome === "Validated") {
+              console.log("Article " + element.id_articolo);
+               this.cacheArticolId.set("Article " + element.id_articolo , element.id);
+
+            }
+          }
+        }),
+        catchError(error => {
+          console.error('Errore durante il recupero degli articoli:', error);
+          return EMPTY; // Ritorna un observable vuoto per continuare il flusso
+        }), finalize(() => {
+
+        })
+      )
+      .subscribe();
+  }
+
+
   loadMvc(): void {
     this.ricercaService.findManyMvc()
       .pipe(
         tap((data: FindAllMvc) => {
           for (const element of data.data) {
             this.cash.cacheMvc.push(element.attributes.Descrizione);
+            this.cash.cacheMvcId.set(element.attributes.Descrizione, element.id);
           }
         }),
         catchError(error => {
@@ -69,6 +95,7 @@ export class PropostaDirective {
         tap((data: FindAllPrincipi) => {
           for (const element of data.data) {
             this.cash.cachePrincipi.push(element.attributes.Descrizione);
+            this.cash.cachePrincipiId.set(element.attributes.Descrizione, element.id);
           }
         }),
         catchError(error => {
@@ -87,6 +114,7 @@ export class PropostaDirective {
         tap((data: FindAllStrategia) => {
           for (const element of data.data) {
             this.cash.cacheStrategia.push(element.attributes.Descrizione);
+            this.cash.cacheStrategiaId.set(element.attributes.Descrizione, element.id);
           }
         }),
         catchError(error => {
@@ -105,6 +133,7 @@ export class PropostaDirective {
         tap((data: FindAllIso) => {
           for (const element of data.data) {
             this.cash.cacheIso.push(element.attributes.Descrizione);
+            this.cash.cacheIsoId.set(element.attributes.Descrizione, element.id);
           }
         }),
         catchError(error => {
@@ -123,6 +152,7 @@ export class PropostaDirective {
         tap((data: FindAllVulnerabilita) => {
           for (const element of data.data) {
             this.cash.cacheVulnerabilita.push(element.attributes.Descrizione);
+            this.cash.cacheVulnerabilitaId.set(element.attributes.Descrizione, element.id);
           }
         }),
         catchError(error => {
@@ -141,6 +171,7 @@ export class PropostaDirective {
         tap((data: FindAllCategoria) => {
           for (const element of data.data) {
             this.cash.cacheCategoria.push(element.attributes.Descrizione);
+            this.cash.cacheCategoriaId.set(element.attributes.Descrizione, element.id);
           }
         }),
         catchError(error => {
@@ -166,21 +197,21 @@ export class PropostaDirective {
       case "esempio":
         return this.cleanText(items) == this.cleanText(this.text_compare.esempio);
       case "mvc":
-         return this.listsHaveSameElements(items.split(", "), this.text_compare.mvc.split(", "));
+        return this.listsHaveSameElements(items.split(", "), this.text_compare.mvc.split(", "));
       case "article":
-         return this.listsHaveSameElements(items.split(", "), this.text_compare.articolo.split(","));
+        return this.listsHaveSameElements(items.split(", "), this.text_compare.articolo.split(","));
       case "principi":
-         return this.listsHaveSameElements(items.split(", "), this.text_compare.principi.split(", "));
-       case "strategia":
-         return this.listsHaveSameElements(items.split(", "), this.text_compare.strategia.split(", "));
+        return this.listsHaveSameElements(items.split(", "), this.text_compare.principi.split(", "));
+      case "strategia":
+        return this.listsHaveSameElements(items.split(", "), this.text_compare.strategia.split(", "));
       case "iso":
-         return this.listsHaveSameElements(items.split(", "), this.text_compare.iso.split(", "));
+        return this.listsHaveSameElements(items.split(", "), this.text_compare.iso.split(", "));
       case "cwe":
         return this.listsHaveSameElements(items.split(", "), this.text_compare.vulnerabilita.split(", "));
       case "categoria":
         return this.listsHaveSameElements(items.split(", "), this.text_compare.categoria.split(", "));
 
-        default:
+      default:
         return false;
     }
 
@@ -207,5 +238,48 @@ export class PropostaDirective {
     return true;
   }
 
-
+  get_list_id(tipo: string, items: string): number[] {
+    let lista : number[] = [];
+    let elem: string[] = items.split(", ");
+    switch (tipo) {
+        case "mvc":
+             for (const element of elem) {
+               lista.push(Number(this.cash.cacheMvcId.get(element)));
+             }
+             break;
+        case "principi":
+             for (const element of elem) {
+               lista.push(Number(this.cash.cachePrincipiId.get(element)));
+             }
+             break;
+        case "strategia":
+             for (const element of elem) {
+               lista.push(Number(this.cash.cacheStrategiaId.get(element)));
+             }
+             break;
+        case "iso":
+             for (const element of elem) {
+               lista.push(Number(this.cash.cacheIsoId.get(element)));
+             }
+             break;
+        case "cwe":
+             for (const element of elem) {
+               lista.push(Number(this.cash.cacheVulnerabilitaId.get(element)));
+             }
+             break;
+        case "categoria":
+             for (const element of elem) {
+               lista.push(Number(this.cash.cacheCategoriaId.get(element)));
+             }
+             break;
+        case "articoli":
+             for (const element of elem) {
+               lista.push(Number(this.cacheArticolId.get(element)));
+             }
+             break;
+        default:
+             break;
+    }
+    return lista;
+  }
 }

@@ -26,7 +26,7 @@
             <hr class="hr-link mt-2 mx-auto m-0 " *ngIf="isArticoloActive">
           </a>
         </li>
-        <li *ngIf=" !this.accessService.access.access" class="nav-item link-size  p-0">
+        <li *ngIf=" this.accessService.access.access" class="nav-item link-size  p-0">
           <a class="nav-link p-1 me-2 m-0 " [routerLink]=" '/proposta'"  routerLinkActive="active">Proposta
             <hr class="hr-link mt-2 mx-auto m-0 " *ngIf="isPropostaActive">
           </a>
