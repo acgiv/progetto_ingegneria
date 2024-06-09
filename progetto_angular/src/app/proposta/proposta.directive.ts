@@ -53,7 +53,6 @@ export class PropostaDirective {
         tap((data: FindAllArticle) => {
           for (const element of data) {
             if (element.stato.nome === "Validated") {
-              console.log("Article " + element.id_articolo);
               this.cacheArticolId.set("Article " + element.id_articolo, element.id);
 
             }

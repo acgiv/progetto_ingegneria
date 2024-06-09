@@ -86,6 +86,7 @@ export class HeaderComponent implements OnInit  {
 
        exit() {
           this.accessService.resetAccess()
+          this.toggleprofile();
         }
 
         sendSearch(s: NgForm){

@@ -16,9 +16,6 @@
       "type": "string",
       "unique": true
     },
-    "password": {
-      "type": "password"
-    },
     "email": {
       "type": "email",
       "unique": true
@@ -41,6 +38,9 @@
       "relation": "oneToOne",
       "target": "api::sviluppatore.sviluppatore",
       "mappedBy": "utente"
+    },
+    "password": {
+      "type": "text"
     }
   }
 }

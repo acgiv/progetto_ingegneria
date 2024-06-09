@@ -51,7 +51,7 @@
           </ul>
         </li>
       </ul>
-       <form  (ngSubmit)="sendSearch(s)" #s="ngForm" *ngIf="!isLoginActive && !isRegistrationActive && !isHomeActive &&!isPropostaActive" class="form-inline  d-flex ">
+       <form  (ngSubmit)="sendSearch(s)" #s="ngForm" *ngIf="!isLoginActive && !isRegistrationActive && !isHomeActive &&!isPropostaActive && !isActive('/recuperopassword')" class="form-inline  d-flex ">
           <div  class="dropdown">
             <a class="btn bg-white dropdown-toggle text-secondary border border-1 rounded-end-0 border-end-0 "  role="button" id="dropdownMenuLink" (click)=" filtraNavbar()" aria-expanded="false">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
@@ -59,7 +59,6 @@
             </svg>
               {{selectedItem}}
             </a>
-
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [ngClass]="{'show': isfiltraOpen}">
               <a class="dropdown-item"  *ngFor="let items of this.ricercaService.getListPattern()"  (click)="selectItem(items)">{{items}}</a>
             </div>

@@ -58,10 +58,13 @@
               <div class="progress-bar" [style.width.%]="registerService.value_percent_password"
                    [style.background-color]="registerService.color_progress()"></div>
             </div>
-            <pre class="text-danger pt-2 m-0 error-message"
-                 *ngIf="(passwordNgModel.touched || passwordNgModel.dirty) && passwordNgModel.errors?.['invalidPassowrd'] || ( passwordNgModel.errors?.['required'] &&  this.control_error['formControl'] ) ">{{ passwordNgModel.errors?.['massage_error'] }}</pre>
+            <p class="text-danger  m-0 error-message"
+                 *ngIf="(passwordNgModel.touched || passwordNgModel.dirty) && passwordNgModel.errors?.['invalidPassowrd'] || ( passwordNgModel.errors?.['required'] &&  this.control_error['formControl'] ) ">{{ passwordNgModel.errors?.['massage_error'] }}
+            </p>
+
             <label class="pt-4 pb-2" for="confirm_password"><span class="fw-semibold">Conferma Password </span><span
               class="text-black-50">*</span></label>
+
             <div class="pws">
               <input [type]="viewPasswordService.getPasswordType('confirm_password')" id="confirm_password"
                      class="form-control pass" name="confirm_password" placeholder="conferma Password*" autocomplete="off"
@@ -74,6 +77,7 @@
                *ngIf="confirm_passwordNgModel.value !== passwordNgModel.value ">
               Le password non coincidono!
             </p>
+
               <label class="pt-4 pb-2" for="rule" ><span class="fw-semibold">Ruolo </span><span
               class="text-black-50">*</span></label>
             <div class="dropdown">

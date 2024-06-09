@@ -142,6 +142,20 @@ const myExtraRoutes = [
           }
           return { id: utente.id, ruolo: utente.ruolo, error: false, email: utente.email};
       },
+
+      async checkEmail(email) {
+        const utente = await strapi.db.query('api::utente.utente').findOne({
+          where: { 
+            email: { $eq: email } 
+          }
+        });
+        if (!utente ) {
+          return { id: null, ruolo: null, error: true,  email: null};
+        }
+        return { id: utente.id, ruolo: utente.ruolo, error: false, email: utente.email, username: utente.username};
+    },
+
+
         
     }
   ));

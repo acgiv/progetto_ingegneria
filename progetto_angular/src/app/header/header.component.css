@@ -1,4 +1,17 @@
-
+.btn.btn-outline-success{
+  color: dodgerblue;
+  border-color: dodgerblue;
+}
+.btn-outline-success:hover{
+  color: white;
+  background: dodgerblue;
+  border-color: dodgerblue;
+}
+.btn-outline-success:focus{
+  background: dodgerblue;
+  color: white;
+  border-color: dodgerblue;
+}
 
 .nav-shadow{
   box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 22%);
